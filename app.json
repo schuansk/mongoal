@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "mongoal",
+    "slug": "mongoal",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
