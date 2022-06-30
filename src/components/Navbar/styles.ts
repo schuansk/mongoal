@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { AnyStyledComponent } from 'styled-components';
 import styled from 'styled-components/native';
 
@@ -8,13 +8,46 @@ export const Container = styled.View`
   width: 100%;
   height: 55px;
   background: ${props => props.theme.colors.white};
+  flex-direction: row;
 `;
 
-export const Action = styled.TouchableOpacity``;
+export const Option = styled.TouchableOpacity.attrs(props => ({
+  activeOpacity: props.theme.constants.buttonActiveOpacity,
+}))`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
 
-export const DashboardIcon = styled(
-  MaterialCommunityIcons as unknown as AnyStyledComponent,
+export const HomeIcon = styled(Ionicons as unknown as AnyStyledComponent).attrs(
+  props => ({
+    name: 'md-home',
+    size: props.theme.constants.iconSize,
+  }),
+)`
+  color: ${props => props.theme.colors.purple_700};
+`;
+
+export const CategoryIcon = styled(
+  Ionicons as unknown as AnyStyledComponent,
 ).attrs(props => ({
-  name: 'view-dashboard',
+  name: 'md-list-outline',
   size: props.theme.constants.iconSize,
+  color: props.theme.colors.gray_600,
+}))``;
+
+export const BalanceIcon = styled(
+  MaterialIcons as unknown as AnyStyledComponent,
+).attrs(props => ({
+  name: 'account-balance',
+  size: props.theme.constants.iconSize,
+  color: props.theme.colors.gray_600,
+}))``;
+
+export const SettingsIcon = styled(
+  Ionicons as unknown as AnyStyledComponent,
+).attrs(props => ({
+  name: 'settings-outline',
+  size: props.theme.constants.iconSize,
+  color: props.theme.colors.gray_600,
 }))``;

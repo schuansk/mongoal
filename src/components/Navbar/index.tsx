@@ -1,8 +1,30 @@
 import React from 'react';
-import { Container } from './styles';
+import {
+  BalanceIcon,
+  CategoryIcon,
+  Container,
+  HomeIcon,
+  Option,
+  SettingsIcon,
+} from './styles';
 
 const Navbar: React.FC = () => {
-  return <Container />;
+  return (
+    <Container>
+      <Option>
+        <HomeIcon />
+      </Option>
+      <Option>
+        <CategoryIcon />
+      </Option>
+      <Option>
+        <BalanceIcon />
+      </Option>
+      <Option>
+        <SettingsIcon />
+      </Option>
+    </Container>
+  );
 };
 
 export default Navbar;
