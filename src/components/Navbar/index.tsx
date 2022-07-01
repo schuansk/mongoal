@@ -1,4 +1,7 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
+import { RootStackParamList } from '../../../navigation';
 import {
   BalanceIcon,
   CategoryIcon,
@@ -8,20 +11,30 @@ import {
   SettingsIcon,
 } from './styles';
 
+type Screens = NativeStackNavigationProp<RootStackParamList>;
+
 const Navbar: React.FC = () => {
+  const [currentScreen, setCurrentScreen] = React.useState('Home');
+  const navigation = useNavigation<Screens>();
+
+  const navigator = (screen: keyof RootStackParamList) => {
+    navigation.navigate(screen);
+    setCurrentScreen(screen);
+  };
+
   return (
     <Container>
-      <Option>
-        <HomeIcon />
+      <Option onPress={() => navigator('Home')}>
+        <HomeIcon selected={currentScreen === 'Home'} />
+      </Option>
+      <Option onPress={() => navigator('Category')}>
+        <CategoryIcon selected={currentScreen === 'Category'} />
       </Option>
       <Option>
-        <CategoryIcon />
+        <BalanceIcon selected={currentScreen === 'Balance'} />
       </Option>
       <Option>
-        <BalanceIcon />
-      </Option>
-      <Option>
-        <SettingsIcon />
+        <SettingsIcon selected={currentScreen === 'Settings'} />
       </Option>
     </Container>
   );

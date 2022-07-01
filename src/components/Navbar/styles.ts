@@ -2,6 +2,10 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { AnyStyledComponent } from 'styled-components';
 import styled from 'styled-components/native';
 
+interface IconProps {
+  selected: boolean;
+}
+
 export const Container = styled.View`
   position: absolute;
   bottom: 0;
@@ -24,8 +28,11 @@ export const HomeIcon = styled(Ionicons as unknown as AnyStyledComponent).attrs(
     name: 'md-home',
     size: props.theme.constants.iconSize,
   }),
-)`
-  color: ${props => props.theme.colors.purple_700};
+)<IconProps>`
+  color: ${props =>
+    props.selected
+      ? props.theme.colors.purple_700
+      : props.theme.colors.gray_600};
 `;
 
 export const CategoryIcon = styled(
@@ -34,7 +41,12 @@ export const CategoryIcon = styled(
   name: 'md-list-outline',
   size: props.theme.constants.iconSize,
   color: props.theme.colors.gray_600,
-}))``;
+}))<IconProps>`
+  color: ${props =>
+    props.selected
+      ? props.theme.colors.purple_700
+      : props.theme.colors.gray_600};
+`;
 
 export const BalanceIcon = styled(
   MaterialIcons as unknown as AnyStyledComponent,
@@ -42,7 +54,12 @@ export const BalanceIcon = styled(
   name: 'account-balance',
   size: props.theme.constants.iconSize,
   color: props.theme.colors.gray_600,
-}))``;
+}))<IconProps>`
+  color: ${props =>
+    props.selected
+      ? props.theme.colors.purple_700
+      : props.theme.colors.gray_600};
+`;
 
 export const SettingsIcon = styled(
   Ionicons as unknown as AnyStyledComponent,
@@ -50,4 +67,9 @@ export const SettingsIcon = styled(
   name: 'settings-outline',
   size: props.theme.constants.iconSize,
   color: props.theme.colors.gray_600,
-}))``;
+}))<IconProps>`
+  color: ${props =>
+    props.selected
+      ? props.theme.colors.purple_700
+      : props.theme.colors.gray_600};
+`;
