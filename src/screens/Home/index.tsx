@@ -1,6 +1,7 @@
 import React from 'react';
 import GoalIndicador from '../../components/GoalIndicator';
 import Navbar from '../../components/Navbar';
+import TranstionList from '../../components/Transaction/List';
 import { Container, Content, CurrentBalance, Header } from './styles';
 
 const Home: React.FC = () => {
@@ -11,6 +12,7 @@ const Home: React.FC = () => {
           <CurrentBalance>R$ 1.000,00</CurrentBalance>
         </Header>
         <GoalIndicador />
+        <TranstionList />
       </Content>
       <Navbar name="Home" />
     </Container>

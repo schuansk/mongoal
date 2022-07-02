@@ -5,7 +5,10 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const Content = styled.View``;
+export const Content = styled.View`
+  width: 100%;
+  height: 100%;
+`;
 
 export const Header = styled(LinearGradient).attrs(props => ({
   colors: [props.theme.colors.purple_700, props.theme.colors.red_600],
