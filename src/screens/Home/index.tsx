@@ -1,12 +1,15 @@
 import React from 'react';
-import { Text } from 'react-native';
 import Navbar from '../../components/Navbar';
-import { Container } from './styles';
+import { Container, Content, CurrentBalance, Header } from './styles';
 
 const Home: React.FC = () => {
   return (
     <Container>
-      <Text>Home</Text>
+      <Content>
+        <Header>
+          <CurrentBalance>R$ 1.000,00</CurrentBalance>
+        </Header>
+      </Content>
       <Navbar name="Home" />
     </Container>
   );
