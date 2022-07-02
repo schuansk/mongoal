@@ -13,28 +13,30 @@ import {
 
 type Screens = NativeStackNavigationProp<RootStackParamList>;
 
-const Navbar: React.FC = () => {
-  const [currentScreen, setCurrentScreen] = React.useState('Home');
+type NavbarProps = {
+  name: keyof RootStackParamList;
+};
+
+const Navbar: React.FC<NavbarProps> = ({ name }) => {
   const navigation = useNavigation<Screens>();
 
   const navigator = (screen: keyof RootStackParamList) => {
     navigation.navigate(screen);
-    setCurrentScreen(screen);
   };
 
   return (
     <Container>
       <Option onPress={() => navigator('Home')}>
-        <HomeIcon selected={currentScreen === 'Home'} />
+        <HomeIcon selected={name === 'Home'} />
       </Option>
       <Option onPress={() => navigator('Category')}>
-        <CategoryIcon selected={currentScreen === 'Category'} />
+        <CategoryIcon selected={name === 'Category'} />
       </Option>
       <Option>
-        <BalanceIcon selected={currentScreen === 'Balance'} />
+        <BalanceIcon selected={name === 'Home'} />
       </Option>
       <Option>
-        <SettingsIcon selected={currentScreen === 'Settings'} />
+        <SettingsIcon selected={name === 'Home'} />
       </Option>
     </Container>
   );

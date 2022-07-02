@@ -7,7 +7,7 @@ const Category: React.FC = () => {
   return (
     <Container>
       <Text>Category</Text>
-      <Navbar />
+      <Navbar name="Category" />
     </Container>
   );
 };

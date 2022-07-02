@@ -7,7 +7,7 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Text>Home</Text>
-      <Navbar />
+      <Navbar name="Home" />
     </Container>
   );
 };
