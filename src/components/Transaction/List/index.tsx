@@ -1,10 +1,13 @@
 import React from 'react';
+import TransactionItem from '../Item';
 import { Container, Content } from './styles';
 
 const TranstionList: React.FC = () => {
   return (
     <Container>
-      <Content />
+      <Content>
+        <TransactionItem />
+      </Content>
     </Container>
   );
 };
