@@ -14,7 +14,7 @@ const GoalIndicador: React.FC = () => {
   const [width, setWidth] = React.useState(24);
 
   const calculateGoalIndicatorWidth = React.useCallback(() => {
-    const px = 24;
+    const px = 30;
     const currentBalance = 1000;
     const goal = 8000;
     const currentPosition = Math.floor((currentBalance / goal) * 10);

@@ -6,7 +6,7 @@ export const Container = styled.View`
   margin-top: 80px;
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
-  padding: 20px 20px 0 20px;
+  padding: 20px 30px 0 30px;
   elevation: ${props => props.theme.constants.elevation};
 `;
 

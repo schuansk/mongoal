@@ -14,7 +14,7 @@ export const Container = styled.View`
 
 export const Content = styled.View`
   position: relative;
-  width: 280px;
+  width: 340px;
   height: 140px;
   top: 120px;
   left: -50%;
@@ -32,7 +32,7 @@ export const Title = styled.Text`
 `;
 
 export const GoalPercentageContainer = styled.View`
-  width: 240px;
+  width: 300px;
   height: 40px;
   background: ${props => props.theme.colors.gray_100};
   border-radius: 20px;
