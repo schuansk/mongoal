@@ -35,8 +35,8 @@ const Navbar: React.FC<NavbarProps> = ({ name }) => {
       <Option onPress={() => navigator('AccountBalance')}>
         <BalanceIcon selected={name === 'AccountBalance'} />
       </Option>
-      <Option>
-        <SettingsIcon selected={name === 'Home'} />
+      <Option onPress={() => navigator('Settings')}>
+        <SettingsIcon selected={name === 'Settings'} />
       </Option>
     </Container>
   );
