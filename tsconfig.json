@@ -1,5 +1,14 @@
 {
-  "compilerOptions": {},
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "lint": {
+          "validProperties": ["elevation"]
+        }
+      }
+    ]
+  },
   "extends": "expo/tsconfig.base",
   "allowJs": true,
   "esModuleInterop": true,
