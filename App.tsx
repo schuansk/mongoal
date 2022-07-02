@@ -8,7 +8,10 @@ import stylertTheme from './src/theme';
 const App = () => {
   return (
     <NavigationContainer>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar
+        barStyle="default"
+        backgroundColor={stylertTheme.colors.purple_700}
+      />
       <ThemeProvider theme={stylertTheme}>
         <View style={{ flex: 1 }}>
           <Routes />
