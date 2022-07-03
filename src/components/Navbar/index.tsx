@@ -3,6 +3,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { RootStackParamList } from '../../../navigation';
 import {
+  ActionButton,
+  ActionContainer,
+  ActionContent,
+  ActionIcon,
   BalanceIcon,
   CategoryIcon,
   Container,
@@ -15,9 +19,10 @@ type Screens = NativeStackNavigationProp<RootStackParamList>;
 
 type NavbarProps = {
   name: keyof RootStackParamList;
+  action(): void;
 };
 
-const Navbar: React.FC<NavbarProps> = ({ name }) => {
+const Navbar: React.FC<NavbarProps> = ({ name, action }) => {
   const navigation = useNavigation<Screens>();
 
   const navigator = (screen: keyof RootStackParamList) => {
@@ -32,6 +37,13 @@ const Navbar: React.FC<NavbarProps> = ({ name }) => {
       <Option onPress={() => navigator('Category')}>
         <CategoryIcon selected={name === 'Category'} />
       </Option>
+      <ActionContainer>
+        <ActionContent>
+          <ActionButton onPress={action}>
+            <ActionIcon />
+          </ActionButton>
+        </ActionContent>
+      </ActionContainer>
       <Option onPress={() => navigator('AccountBalance')}>
         <BalanceIcon selected={name === 'AccountBalance'} />
       </Option>

@@ -14,7 +14,7 @@ const Home: React.FC = () => {
         <GoalIndicador />
         <TranstionList />
       </Content>
-      <Navbar name="Home" />
+      <Navbar name="Home" action={() => console.log('add transaction')} />
     </Container>
   );
 };
