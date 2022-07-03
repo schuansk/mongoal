@@ -7,7 +7,7 @@ const Settings: React.FC = () => {
   return (
     <Container>
       <Text>Settings</Text>
-      <Navbar name="Settings" action={() => console.log('settings')} />
+      <Navbar name="Settings" />
     </Container>
   );
 };

@@ -1,5 +1,4 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { AnyStyledComponent } from 'styled-components';
 import styled from 'styled-components/native';
 
@@ -74,32 +73,3 @@ export const SettingsIcon = styled(
       ? props.theme.colors.purple_700
       : props.theme.colors.gray_600};
 `;
-
-export const ActionContainer = styled.View`
-  justify-content: center;
-  align-items: center;
-`;
-
-export const ActionContent = styled(LinearGradient).attrs(props => ({
-  colors: [props.theme.colors.red_600, props.theme.colors.purple_700],
-}))`
-  border-radius: 25px;
-  margin-top: -55px;
-`;
-
-export const ActionButton = styled.TouchableOpacity.attrs(props => ({
-  activeOpacity: props.theme.constants.buttonActiveOpacity,
-}))`
-  width: 50px;
-  height: 50px;
-  elevation: ${props => props.theme.constants.elevation};
-  border-radius: 25px;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const ActionIcon = styled(MaterialIcons).attrs(props => ({
-  name: 'add',
-  color: props.theme.colors.white,
-  size: props.theme.constants.iconSize,
-}))``;

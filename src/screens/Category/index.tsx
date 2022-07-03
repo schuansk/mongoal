@@ -7,7 +7,7 @@ const Category: React.FC = () => {
   return (
     <Container>
       <Text>Category</Text>
-      <Navbar name="Category" action={() => console.log('add category')} />
+      <Navbar name="Category" />
     </Container>
   );
 };

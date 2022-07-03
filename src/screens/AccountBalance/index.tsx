@@ -7,7 +7,7 @@ const AccountBalance: React.FC = () => {
   return (
     <Container>
       <Text>Account Balance</Text>
-      <Navbar name="AccountBalance" action={() => console.log('add account')} />
+      <Navbar name="AccountBalance" />
     </Container>
   );
 };
