@@ -1,4 +1,6 @@
 import React from 'react';
+import { formatValue } from '../../../utils';
+import { TransactionData } from '../List';
 import {
   AccountName,
   CategoryName,
@@ -11,20 +13,27 @@ import {
   TransactionValue,
 } from './styles';
 
-const TransactionItem: React.FC = () => {
+type TransactionItemProps = {
+  transaction: TransactionData;
+};
+
+const TransactionItem: React.FC<TransactionItemProps> = ({ transaction }) => {
   return (
     <Container>
       <Description>
         <IconContainer backgroundColor="#8D47FF">
-          <Icon name="directions-car" />
+          <Icon name="attach-money" />
         </IconContainer>
         <Details>
-          <AccountName>Nubank</AccountName>
-          <CategoryName>Carro</CategoryName>
-          <TransactionDate>01/01/2022</TransactionDate>
+          <AccountName>{transaction.account.name}</AccountName>
+          <CategoryName>{transaction.category.name}</CategoryName>
+          <TransactionDate>{transaction.createdAt}</TransactionDate>
         </Details>
       </Description>
-      <TransactionValue deposit={false}>- R$ 3.000,00</TransactionValue>
+      <TransactionValue deposit={transaction.type === 'deposit'}>
+        {transaction.type !== 'deposit' && '-'}
+        {formatValue(transaction.value)}
+      </TransactionValue>
     </Container>
   );
 };
