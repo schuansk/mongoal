@@ -23,7 +23,7 @@ const Home: React.FC = () => {
         <GoalIndicador />
         <TranstionList />
       </Content>
-      <ActionButton action={toggleModal} />
+      <ActionButton onPress={toggleModal} />
       <Navbar name="Home" />
       <Modal toggleModal={toggleModal} isVisible={isOpen} height={0.25}>
         <Text>Home</Text>

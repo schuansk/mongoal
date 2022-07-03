@@ -1,9 +1,8 @@
 import { MaterialIcons } from '@expo/vector-icons';
+import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
-export const Container = styled.TouchableOpacity.attrs(props => ({
-  activeOpacity: props.theme.constants.buttonActiveOpacity,
-}))`
+export const Container = styled(RectButton)`
   width: 50px;
   height: 50px;
   position: absolute;

@@ -1,13 +1,10 @@
 import React from 'react';
+import { RectButtonProps } from 'react-native-gesture-handler';
 import { ActionIcon, Container } from './styles';
 
-type ActionButtonProps = {
-  action(): void;
-};
-
-const ActionButton: React.FC<ActionButtonProps> = ({ action }) => {
+const ActionButton: React.FC<RectButtonProps> = ({ ...rest }) => {
   return (
-    <Container onPress={action}>
+    <Container {...rest}>
       <ActionIcon />
     </Container>
   );
