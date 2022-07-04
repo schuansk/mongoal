@@ -1,12 +1,13 @@
 import React from 'react';
-import { Text } from 'react-native';
+import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
-import { Container } from './styles';
+import { Container, Content } from './styles';
 
 const Category: React.FC = () => {
   return (
     <Container>
-      <Text>Category</Text>
+      <Header title="Categorias" />
+      <Content />
       <Navbar name="Category" />
     </Container>
   );
