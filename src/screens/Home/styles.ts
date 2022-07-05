@@ -12,6 +12,8 @@ export const Content = styled.View`
 
 export const Header = styled(LinearGradient).attrs(props => ({
   colors: [props.theme.colors.purple_700, props.theme.colors.red_600],
+  start: { x: 0.0, y: 1.0 },
+  end: { x: 1.0, y: 1.0 },
 }))`
   width: 100%;
   height: 200px;
