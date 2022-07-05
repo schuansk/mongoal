@@ -12,8 +12,9 @@ const App = () => {
   return (
     <NavigationContainer>
       <StatusBar
-        barStyle="default"
-        backgroundColor={stylertTheme.colors.purple_700}
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
       />
       <ThemeProvider theme={stylertTheme}>
         <GestureHandlerRootView style={{ flex: 1 }}>
