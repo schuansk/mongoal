@@ -19,3 +19,8 @@ export const Title = styled.Text`
   margin-left: 40px;
   font-weight: bold;
 `;
+
+export const ActionButtonContainer = styled.View`
+  position: absolute;
+  right: 40px;
+`;
