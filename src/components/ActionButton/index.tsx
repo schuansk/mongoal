@@ -2,10 +2,14 @@ import React from 'react';
 import { RectButtonProps } from 'react-native-gesture-handler';
 import { ActionIcon, Container } from './styles';
 
-const ActionButton: React.FC<RectButtonProps> = ({ ...rest }) => {
+interface ActionButtonProps extends RectButtonProps {
+  light?: boolean;
+}
+
+const ActionButton: React.FC<ActionButtonProps> = ({ light, ...rest }) => {
   return (
-    <Container {...rest}>
-      <ActionIcon />
+    <Container light={light} {...rest}>
+      <ActionIcon light={light} />
     </Container>
   );
 };
