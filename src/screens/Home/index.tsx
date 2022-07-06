@@ -5,7 +5,13 @@ import GoalIndicador from '../../components/GoalIndicator';
 import Modal from '../../components/Modal';
 import Navbar from '../../components/Navbar';
 import TranstionList from '../../components/Transaction/List';
-import { Container, Content, CurrentBalance, Header } from './styles';
+import {
+  ActionButtonContainer,
+  Container,
+  Content,
+  CurrentBalance,
+  Header,
+} from './styles';
 
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -23,7 +29,9 @@ const Home: React.FC = () => {
         <GoalIndicador />
         <TranstionList />
       </Content>
-      <ActionButton onPress={toggleModal} />
+      <ActionButtonContainer>
+        <ActionButton onPress={toggleModal} />
+      </ActionButtonContainer>
       <Navbar name="Home" />
       <Modal toggleModal={toggleModal} isVisible={isOpen} height={0.25}>
         <Text>Home</Text>

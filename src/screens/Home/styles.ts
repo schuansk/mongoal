@@ -29,3 +29,9 @@ export const CurrentBalance = styled.Text`
   text-align: center;
   margin-top: 40px;
 `;
+
+export const ActionButtonContainer = styled.View`
+  position: absolute;
+  bottom: 60px;
+  right: 10px;
+`;
