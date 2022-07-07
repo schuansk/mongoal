@@ -1,10 +1,16 @@
 import React from 'react';
-import { Text } from 'react-native';
 import CategoryList from '../../components/Category/List';
 import Header from '../../components/Header';
+import Input from '../../components/Input';
 import Modal from '../../components/Modal';
 import Navbar from '../../components/Navbar';
-import { Container, Content } from './styles';
+import {
+  Container,
+  Content,
+  ModalContent,
+  ModalSection,
+  MonetarySumbol,
+} from './styles';
 
 const Category: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -20,8 +26,16 @@ const Category: React.FC = () => {
         <CategoryList />
       </Content>
       <Navbar name="Category" />
-      <Modal toggleModal={toggleModal} isVisible={isOpen} height={0.25}>
-        <Text>Oi</Text>
+      <Modal toggleModal={toggleModal} isVisible={isOpen} height={0.35}>
+        <ModalContent>
+          <ModalSection>
+            <MonetarySumbol>R$</MonetarySumbol>
+            <Input placeholder="0,00" />
+          </ModalSection>
+          <ModalSection>
+            <Input placeholder="" />
+          </ModalSection>
+        </ModalContent>
       </Modal>
     </Container>
   );
