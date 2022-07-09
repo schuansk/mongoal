@@ -1,3 +1,4 @@
+/* eslint no-param-reassign: ["error", { "props": false }] */
 import React from 'react';
 import CategoryList from '../../components/Category/List';
 import Header from '../../components/Header';
@@ -5,6 +6,8 @@ import IconSelector from '../../components/IconSelector';
 import Input from '../../components/Input';
 import Modal from '../../components/Modal';
 import Navbar from '../../components/Navbar';
+import { database } from '../../database';
+import CategoryModel from '../../database/models/categoryModel';
 import {
   ConfirmIcon,
   Container,
@@ -24,10 +27,19 @@ const Category: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
-  React.useEffect(() => {
-    console.log('icon', selectedIcon);
-    console.log('category', categoryName);
+  const handleSubmit = React.useCallback(() => {
+    if (categoryName === '' || selectedIcon === '') return;
+    handleAddNewCategory(categoryName, selectedIcon);
   }, [selectedIcon, categoryName]);
+
+  const handleAddNewCategory = async (name: string, icon: string) => {
+    await database.collections
+      .get<CategoryModel>('categories')
+      .create(category => {
+        category.name = name;
+        category.icon = icon;
+      });
+  };
 
   return (
     <Container>
@@ -47,7 +59,7 @@ const Category: React.FC = () => {
             />
           </ModalSection>
           <ModalSection>
-            <CreateCategoryButton>
+            <CreateCategoryButton onPress={() => handleSubmit()}>
               <ConfirmIcon />
             </CreateCategoryButton>
           </ModalSection>
