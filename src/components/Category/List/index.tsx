@@ -1,5 +1,7 @@
 import React from 'react';
 import { ListRenderItem } from 'react-native';
+import { database } from '../../../database';
+import CategoryModel from '../../../database/models/categoryModel';
 import CategoryItem from '../Item';
 import { Container, Content, ListFooter, RowSeparator } from './styles';
 
@@ -7,8 +9,6 @@ export type CategoryData = {
   id: string;
   name: string;
   icon: string;
-  createdAt: string;
-  updatedAt: string;
 };
 const CategoryList: React.FC = () => {
   const [categories, setCategories] = React.useState<CategoryData[]>([]);
@@ -18,23 +18,13 @@ const CategoryList: React.FC = () => {
   };
 
   React.useEffect(() => {
-    const data = [
-      {
-        id: '1',
-        name: 'Carro',
-        icon: 'icon',
-        createdAt: '01/01/2022',
-        updatedAt: '01/01/2022',
-      },
-      {
-        id: '2',
-        name: 'Casa',
-        icon: 'icon',
-        createdAt: '01/01/2022',
-        updatedAt: '01/01/2022',
-      },
-    ];
-    setCategories(data);
+    (async () => {
+      const response = await database.collections
+        .get<CategoryModel>('categories')
+        .query()
+        .fetch();
+      setCategories(response);
+    })();
   }, []);
 
   return (
