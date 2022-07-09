@@ -75,7 +75,11 @@ const IconSelector: React.FC<IconSelectorProps> = ({ callback }) => {
           <SelectedIcon name={selectedIcon} />
         </CurrentSelectionTitle>
       </CurrentSelection>
-      <OptionsSelectorContainer visible={isOpen} animationType="slide">
+      <OptionsSelectorContainer
+        visible={isOpen}
+        animationType="slide"
+        onRequestClose={() => setIsOpen(false)}
+      >
         <OptionsSelectorHeader>
           <GoBack onPress={toggleModal}>
             <GoBackIcon />

@@ -12,7 +12,9 @@ export const Container = styled.View`
   border-radius: 10px;
 `;
 
-export const CurrentSelection = styled.TouchableOpacity``;
+export const CurrentSelection = styled.TouchableOpacity.attrs(props => ({
+  activeOpacity: props.theme.constants.buttonActiveOpacity,
+}))``;
 
 export const CurrentSelectionTitle = styled.Text``;
 
