@@ -5,11 +5,20 @@ import IconSelector from '../../components/IconSelector';
 import Input from '../../components/Input';
 import Modal from '../../components/Modal';
 import Navbar from '../../components/Navbar';
-import { Container, Content, ModalContent, ModalSection } from './styles';
+import {
+  ConfirmIcon,
+  Container,
+  Content,
+  CreateCategoryButton,
+  ModalContent,
+  ModalSection,
+  ModalTitle,
+} from './styles';
 
 const Category: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedIcon, setSelectedIcon] = React.useState('');
+  const [categoryName, setCategoryName] = React.useState('');
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -17,7 +26,8 @@ const Category: React.FC = () => {
 
   React.useEffect(() => {
     console.log('icon', selectedIcon);
-  }, [selectedIcon]);
+    console.log('category', categoryName);
+  }, [selectedIcon, categoryName]);
 
   return (
     <Container>
@@ -26,11 +36,20 @@ const Category: React.FC = () => {
         <CategoryList />
       </Content>
       <Navbar name="Category" />
-      <Modal toggleModal={toggleModal} isVisible={isOpen} height={0.25}>
+      <Modal toggleModal={toggleModal} isVisible={isOpen} height={0.32}>
+        <ModalTitle>Criar nova categoria</ModalTitle>
         <ModalContent>
           <ModalSection>
-            <Input placeholder="Nome da categoria" />
             <IconSelector callback={(icon: string) => setSelectedIcon(icon)} />
+            <Input
+              placeholder="Nome da categoria"
+              callback={name => setCategoryName(name)}
+            />
+          </ModalSection>
+          <ModalSection>
+            <CreateCategoryButton>
+              <ConfirmIcon />
+            </CreateCategoryButton>
           </ModalSection>
         </ModalContent>
       </Modal>
