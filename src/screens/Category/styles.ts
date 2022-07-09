@@ -1,6 +1,4 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { RectButton } from 'react-native-gesture-handler';
-import { AnyStyledComponent } from 'styled-components';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -30,9 +28,9 @@ export const ModalTitle = styled.Text`
   color: ${props => props.theme.colors.gray_600};
 `;
 
-export const CreateCategoryButton = styled(
-  RectButton as unknown as AnyStyledComponent,
-)`
+export const CreateCategoryButton = styled.TouchableOpacity.attrs(props => ({
+  activeOpacity: props.theme.constants.buttonActiveOpacity,
+}))`
   width: 50px;
   height: 50px;
   border-radius: 25px;
