@@ -18,5 +18,5 @@ export default class CategoryModel extends Model {
   icon!: string;
 
   @children('transactions')
-  transactions!: unknown;
+  transactions: unknown;
 }

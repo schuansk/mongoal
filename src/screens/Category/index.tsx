@@ -24,23 +24,35 @@ const Category: React.FC = () => {
     React.useState<MaterialIconName>('category');
   const [categoryName, setCategoryName] = React.useState('');
 
-  const toggleModal = () => {
+  const toggleModal = React.useCallback(() => {
     setIsOpen(!isOpen);
-  };
+  }, [isOpen]);
+
+  const handleAddNewCategory = React.useCallback(
+    async (name: string, icon: string) => {
+      try {
+        await database.write(async () => {
+          await database.collections
+            .get<CategoryModel>('categories')
+            .create(category => {
+              category.name = name;
+              category.icon = icon;
+            });
+        });
+        setCategoryName('');
+        setSelectedIcon('category');
+        toggleModal();
+      } catch (error) {
+        console.log('error', error);
+      }
+    },
+    [toggleModal],
+  );
 
   const handleSubmit = React.useCallback(() => {
     if (categoryName === '') return;
     handleAddNewCategory(categoryName, selectedIcon);
-  }, [selectedIcon, categoryName]);
-
-  const handleAddNewCategory = async (name: string, icon: string) => {
-    await database.collections
-      .get<CategoryModel>('categories')
-      .create(category => {
-        category.name = name;
-        category.icon = icon;
-      });
-  };
+  }, [categoryName, handleAddNewCategory, selectedIcon]);
 
   return (
     <Container>
