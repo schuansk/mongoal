@@ -2,7 +2,7 @@
 import React from 'react';
 import CategoryList from '../../components/Category/List';
 import Header from '../../components/Header';
-import IconSelector from '../../components/IconSelector';
+import IconSelector, { MaterialIconName } from '../../components/IconSelector';
 import Input from '../../components/Input';
 import Modal from '../../components/Modal';
 import Navbar from '../../components/Navbar';
@@ -20,7 +20,8 @@ import {
 
 const Category: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [selectedIcon, setSelectedIcon] = React.useState('');
+  const [selectedIcon, setSelectedIcon] =
+    React.useState<MaterialIconName>('category');
   const [categoryName, setCategoryName] = React.useState('');
 
   const toggleModal = () => {
@@ -28,7 +29,7 @@ const Category: React.FC = () => {
   };
 
   const handleSubmit = React.useCallback(() => {
-    if (categoryName === '' || selectedIcon === '') return;
+    if (categoryName === '') return;
     handleAddNewCategory(categoryName, selectedIcon);
   }, [selectedIcon, categoryName]);
 
@@ -52,7 +53,10 @@ const Category: React.FC = () => {
         <ModalTitle>Criar nova categoria</ModalTitle>
         <ModalContent>
           <ModalSection>
-            <IconSelector callback={(icon: string) => setSelectedIcon(icon)} />
+            <IconSelector
+              defaultIcon={selectedIcon}
+              callback={(icon: MaterialIconName) => setSelectedIcon(icon)}
+            />
             <Input
               placeholder="Nome da categoria"
               callback={name => setCategoryName(name)}

@@ -22,17 +22,23 @@ import {
   SelectedIcon,
 } from './styles';
 
-type MaterialIconName = React.ComponentProps<typeof MaterialIcons>['name'];
+export type MaterialIconName = React.ComponentProps<
+  typeof MaterialIcons
+>['name'];
 
 type IconSelectorProps = {
+  defaultIcon: MaterialIconName;
   callback(icon: string): void;
 };
 
-const IconSelector: React.FC<IconSelectorProps> = ({ callback }) => {
+const IconSelector: React.FC<IconSelectorProps> = ({
+  defaultIcon,
+  callback,
+}) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [icons, setIcons] = React.useState([]);
   const [selectedIcon, setSelectedIcon] =
-    React.useState<MaterialIconName>('category');
+    React.useState<MaterialIconName>(defaultIcon);
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -40,8 +46,8 @@ const IconSelector: React.FC<IconSelectorProps> = ({ callback }) => {
 
   const handleSelectIcon = (icon: MaterialIconName) => {
     setSelectedIcon(icon);
-    toggleModal();
     callback(icon);
+    toggleModal();
   };
 
   const keyExtractor = (icon: MaterialIconName) => icon;
