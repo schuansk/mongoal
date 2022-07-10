@@ -10,13 +10,14 @@ import {
   IconContainer,
 } from './styles';
 
-interface CategoryItemProps {
+type CategoryItemProps = {
   category: CategoryModel;
-}
+  onPress(): void;
+};
 
-const CategoryItem: React.FC<CategoryItemProps> = ({ category }) => {
+const CategoryItem: React.FC<CategoryItemProps> = ({ category, onPress }) => {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <Description>
         <IconContainer>
           <Icon name={category.icon} />

@@ -37,3 +37,10 @@ export const ConfirmIcon = styled(MaterialIcons).attrs(props => ({
   size: props.theme.constants.iconSize,
   color: props.theme.colors.white,
 }))``;
+
+export const LoadingIcon = styled.View`
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: ${props => props.theme.colors.gray_600};
+`;
