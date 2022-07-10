@@ -5,6 +5,7 @@ import CategoryList from '../../components/Category/List';
 import CategoryModal from '../../components/Category/Modal';
 import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
+import theme from '../../theme';
 import { Container, Content } from './styles';
 
 const Category: React.FC = () => {
@@ -41,7 +42,11 @@ const Category: React.FC = () => {
 
   return (
     <Container>
-      <Header title="Categorias" onPress={toggleModal} />
+      <Header
+        title="Categorias"
+        onPress={toggleModal}
+        background={[theme.colors.purple_700, theme.colors.blue_600]}
+      />
       <Content>
         <CategoryList
           editCategory={(id: string) => editCategory(id)}
