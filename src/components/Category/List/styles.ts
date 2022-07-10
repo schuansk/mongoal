@@ -1,6 +1,6 @@
 import { FlatList, FlatListProps } from 'react-native';
 import styled from 'styled-components/native';
-import { CategoryData } from '.';
+import CategoryModel from '../../../database/models/categoryModel';
 
 export const Container = styled.View`
   flex: 1;
@@ -12,8 +12,8 @@ export const Container = styled.View`
   elevation: ${props => props.theme.constants.elevation};
 `;
 
-export const Content = styled(FlatList as new () => FlatList<CategoryData>)<
-  FlatListProps<CategoryData>
+export const Content = styled(FlatList as new () => FlatList<CategoryModel>)<
+  FlatListProps<CategoryModel>
 >``;
 
 export const RowSeparator = styled.View`

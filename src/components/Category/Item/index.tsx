@@ -1,5 +1,5 @@
 import React from 'react';
-import { CategoryData } from '../List';
+import CategoryModel from '../../../database/models/categoryModel';
 import {
   ActionIcon,
   CategoryName,
@@ -11,7 +11,7 @@ import {
 } from './styles';
 
 interface CategoryItemProps {
-  category: CategoryData;
+  category: CategoryModel;
 }
 
 const CategoryItem: React.FC<CategoryItemProps> = ({ category }) => {
@@ -19,7 +19,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ category }) => {
     <Container>
       <Description>
         <IconContainer>
-          <Icon name="category" />
+          <Icon name={category.icon} />
         </IconContainer>
         <Details>
           <CategoryName>{category.name}</CategoryName>
