@@ -13,11 +13,16 @@ import {
 type CategoryItemProps = {
   category: CategoryModel;
   onPress(): void;
+  onLongPress(): void;
 };
 
-const CategoryItem: React.FC<CategoryItemProps> = ({ category, onPress }) => {
+const CategoryItem: React.FC<CategoryItemProps> = ({
+  category,
+  onPress,
+  onLongPress,
+}) => {
   return (
-    <Container onPress={onPress}>
+    <Container onPress={onPress} onLongPress={onLongPress}>
       <Description>
         <IconContainer>
           <Icon name={category.icon} />

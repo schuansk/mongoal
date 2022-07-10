@@ -10,6 +10,7 @@ import { Container, Content, ListFooter, RowSeparator } from './styles';
 interface ICategory {
   categories: CategoryModel[];
   editCategory(id: string): void;
+  deleteCategory(id: string): void;
 }
 
 const categoryCollection = database.collections.get('categories');
@@ -21,13 +22,18 @@ const enhanceWithCategories = withObservables([], () => ({
   categories: observeCategories(),
 }));
 
-const CategoryList: React.FC<ICategory> = ({ editCategory, categories }) => {
+const CategoryList: React.FC<ICategory> = ({
+  editCategory,
+  deleteCategory,
+  categories,
+}) => {
   const renderItem: ListRenderItem<CategoryModel> = ({ item: category }) => {
     return (
       <CategoryItem
         key={category.id}
         category={category}
         onPress={() => editCategory(category.id)}
+        onLongPress={() => deleteCategory(category.id)}
       />
     );
   };
