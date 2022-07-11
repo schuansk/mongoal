@@ -1,4 +1,3 @@
-/* eslint no-param-reassign: ["error", { "props": false }] */
 import React from 'react';
 import DeleteCategoryModal from '../../components/Category/DeleteModal';
 import CategoryList from '../../components/Category/List';
