@@ -20,6 +20,12 @@ export const ModalTitle = styled.Text`
   color: ${props => props.theme.colors.gray_600};
 `;
 
+export const ColorPickerContainer = styled.View`
+  height: 180px;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const CreateAccountButton = styled.TouchableOpacity.attrs(props => ({
   activeOpacity: props.theme.constants.buttonActiveOpacity,
 }))`
