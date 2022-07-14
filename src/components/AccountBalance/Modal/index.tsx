@@ -29,6 +29,7 @@ const AccountBalanceModal: React.FC<ModalProps> = ({
   const [selectedColor, setSelectedColor] = React.useState('');
   const [accountName, setAccountName] = React.useState('');
   const colorRef = React.useRef<ColorPicker>(null);
+  const [isMounted, setIsMounted] = React.useState(false);
 
   const reset = React.useCallback(
     (changeModal = true) => {
@@ -39,7 +40,39 @@ const AccountBalanceModal: React.FC<ModalProps> = ({
     [toggleModal],
   );
 
-  const handleAddNewCategory = React.useCallback(
+  const getAccount = React.useCallback(
+    async (id: string) => {
+      const account = await database.get<AccountModel>('accounts').find(id);
+      if (isMounted) {
+        setAccountName(account.name);
+        setSelectedColor(account.color);
+      }
+    },
+    [isMounted],
+  );
+
+  const handleEditAccount = React.useCallback(
+    async (name: string, color: string) => {
+      try {
+        await database.write(async () => {
+          const account = await database
+            .get<AccountModel>('accounts')
+            .find(accountId);
+
+          await account.update(currentAccount => {
+            currentAccount.name = name;
+            currentAccount.color = color;
+          });
+        });
+        reset();
+      } catch (error) {
+        console.log('error', error);
+      }
+    },
+    [accountId, reset],
+  );
+
+  const handleAddNewaccount = React.useCallback(
     async (name: string, color: string) => {
       try {
         await database.write(async () => {
@@ -60,8 +93,36 @@ const AccountBalanceModal: React.FC<ModalProps> = ({
 
   const handleSubmit = React.useCallback(() => {
     if (accountName === '') return;
-    handleAddNewCategory(accountName, selectedColor);
-  }, [accountName, handleAddNewCategory, selectedColor]);
+    if (accountId) {
+      handleEditAccount(accountName, selectedColor);
+      return;
+    }
+    handleAddNewaccount(accountName, selectedColor);
+  }, [
+    accountId,
+    accountName,
+    handleAddNewaccount,
+    handleEditAccount,
+    selectedColor,
+  ]);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+    if (isMounted) {
+      if (accountId) {
+        getAccount(accountId);
+      }
+    }
+    return () => {
+      setIsMounted(false);
+    };
+  }, [accountId, getAccount, isMounted]);
+
+  React.useEffect(() => {
+    if (isMounted) {
+      if (!isVisible) reset(false);
+    }
+  }, [isMounted, isVisible, reset]);
 
   return (
     <Modal toggleModal={toggleModal} isVisible={isVisible} height={0.59}>
@@ -71,7 +132,7 @@ const AccountBalanceModal: React.FC<ModalProps> = ({
           <ColorPickerContainer>
             <ColorPicker
               ref={colorRef}
-              color={theme.colors.gray_100}
+              color={selectedColor || theme.colors.gray_100}
               thumbSize={40}
               sliderSize={20}
               noSnap

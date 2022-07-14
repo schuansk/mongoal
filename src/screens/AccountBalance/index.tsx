@@ -9,10 +9,20 @@ import { Container, Content } from './styles';
 
 const AccountBalance: React.FC = () => {
   const [isVisible, setIsVisible] = React.useState(false);
+  const [accountId, setAccountId] = React.useState('');
 
-  const toggleModal = () => {
+  const toggleModal = React.useCallback(() => {
     setIsVisible(!isVisible);
-  };
+  }, [isVisible]);
+
+  const editCategory = React.useCallback(
+    (id: string) => {
+      setAccountId(id);
+      toggleModal();
+    },
+    [toggleModal],
+  );
+
   return (
     <Container>
       <Header
@@ -23,14 +33,14 @@ const AccountBalance: React.FC = () => {
       <Content>
         <AccountBalanceListRender
           deleteAccount={(id: string) => ({})}
-          editAccount={(id: string) => ({})}
+          editAccount={(id: string) => editCategory(id)}
         />
       </Content>
       <Navbar name="AccountBalance" />
       <AccountBalanceModal
         toggleModal={toggleModal}
         isVisible={isVisible}
-        accountId=""
+        accountId={accountId}
       />
     </Container>
   );
