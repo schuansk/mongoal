@@ -15,7 +15,7 @@ const AccountBalance: React.FC = () => {
     setIsVisible(!isVisible);
   }, [isVisible]);
 
-  const editCategory = React.useCallback(
+  const editAccount = React.useCallback(
     (id: string) => {
       setAccountId(id);
       toggleModal();
@@ -33,7 +33,7 @@ const AccountBalance: React.FC = () => {
       <Content>
         <AccountBalanceListRender
           deleteAccount={(id: string) => ({})}
-          editAccount={(id: string) => editCategory(id)}
+          editAccount={(id: string) => editAccount(id)}
         />
       </Content>
       <Navbar name="AccountBalance" />
