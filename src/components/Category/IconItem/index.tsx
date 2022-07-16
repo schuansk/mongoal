@@ -7,7 +7,12 @@ import {
   OptionIcon,
 } from './styles';
 
-const IconItem: React.FC<ItemProps> = ({
+interface IconItemProps
+  extends Pick<ItemProps, 'selectedItem' | 'handleSelection'> {
+  item: string;
+}
+
+const IconItem: React.FC<IconItemProps> = ({
   item,
   selectedItem,
   handleSelection,

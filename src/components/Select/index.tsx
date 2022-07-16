@@ -17,7 +17,7 @@ import {
 } from './styles';
 
 export type ItemProps = {
-  item: string;
+  item: unknown;
   selectedItem: string;
   handleSelection(item: string): void;
 };
