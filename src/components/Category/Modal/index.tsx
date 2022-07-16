@@ -148,6 +148,7 @@ const CategoryModal: React.FC<ModalProps> = ({
               callback={(icon: string) => setSelectedIcon(icon)}
               data={icons}
               keyExtractor={keyExtractor}
+              isIcon
             />
           )}
 

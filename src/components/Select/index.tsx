@@ -27,6 +27,7 @@ type SelectProps = {
   callback(item: string): void;
   data: Array<unknown>;
   keyExtractor(arg: unknown): string;
+  isIcon?: boolean;
   ItemElement({
     item,
     selectedItem,
@@ -40,6 +41,7 @@ const Select: React.FC<SelectProps> = ({
   ItemElement,
   data,
   keyExtractor,
+  isIcon,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState<string>(defaultItem);
@@ -67,9 +69,11 @@ const Select: React.FC<SelectProps> = ({
   return (
     <Container>
       <CurrentSelection onPress={toggleModal}>
-        <CurrentSelectionTitle>
+        {isIcon ? (
           <SelectedItem name={selectedItem} />
-        </CurrentSelectionTitle>
+        ) : (
+          <CurrentSelectionTitle>{selectedItem}</CurrentSelectionTitle>
+        )}
       </CurrentSelection>
       <OptionsSelectorContainer
         visible={isOpen}
