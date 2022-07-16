@@ -8,7 +8,7 @@ import {
   Header,
 } from './styles';
 
-interface ModalProps {
+export interface ModalProps {
   children: React.ReactNode;
   isVisible: boolean;
   toggleModal(): void;

@@ -2,9 +2,11 @@
 import React from 'react';
 import { database } from '../../../database';
 import CategoryModel from '../../../database/models/categoryModel';
-import IconSelector, { MaterialIconName } from '../../IconSelector';
 import Input from '../../Input';
 import Modal from '../../Modal';
+import Select from '../../Select';
+import IconItem from '../IconItem';
+import AvailableIcons from '../IconItem/AvailableIcons.json';
 import {
   ConfirmIcon,
   CreateCategoryButton,
@@ -25,18 +27,18 @@ const CategoryModal: React.FC<ModalProps> = ({
   isVisible,
   categoryId,
 }) => {
-  const [selectedIcon, setSelectedIcon] =
-    React.useState<MaterialIconName>('category');
+  const [selectedIcon, setSelectedIcon] = React.useState('category');
   const [categoryName, setCategoryName] = React.useState('');
   const [isLoadingIcon, setIsLoadingIcon] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
+  const [icons, setIcons] = React.useState([]);
 
   const getCategory = React.useCallback(
     async (id: string) => {
       const category = await database.get<CategoryModel>('categories').find(id);
       if (isMounted) {
         setCategoryName(category.name);
-        setSelectedIcon(category.icon as MaterialIconName);
+        setSelectedIcon(category.icon);
         setIsLoadingIcon(false);
       }
     },
@@ -123,6 +125,7 @@ const CategoryModal: React.FC<ModalProps> = ({
   React.useEffect(() => {
     if (isMounted) {
       if (!isVisible) reset(false);
+      else setIcons(AvailableIcons.icons);
     }
     return () => {
       setIsMounted(false);
@@ -137,9 +140,11 @@ const CategoryModal: React.FC<ModalProps> = ({
           {isLoadingIcon ? (
             <LoadingIcon />
           ) : (
-            <IconSelector
-              defaultIcon={selectedIcon}
-              callback={(icon: MaterialIconName) => setSelectedIcon(icon)}
+            <Select
+              ItemElement={IconItem}
+              defaultItem={selectedIcon}
+              callback={(icon: string) => setSelectedIcon(icon)}
+              data={icons}
             />
           )}
 
