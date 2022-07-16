@@ -26,6 +26,7 @@ type SelectProps = {
   defaultItem: string;
   callback(item: string): void;
   data: Array<unknown>;
+  keyExtractor(arg: unknown): string;
   ItemElement({
     item,
     selectedItem,
@@ -38,6 +39,7 @@ const Select: React.FC<SelectProps> = ({
   callback,
   ItemElement,
   data,
+  keyExtractor,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState<string>(defaultItem);
@@ -51,8 +53,6 @@ const Select: React.FC<SelectProps> = ({
     callback(item);
     toggleModal();
   };
-
-  const keyExtractor = (id: string) => id;
 
   const listFooterComponent = () => <OptionsFooter />;
 

@@ -109,6 +109,8 @@ const CategoryModal: React.FC<ModalProps> = ({
     selectedIcon,
   ]);
 
+  const keyExtractor = (id: string) => id;
+
   React.useEffect(() => {
     setIsMounted(true);
     if (isMounted) {
@@ -145,6 +147,7 @@ const CategoryModal: React.FC<ModalProps> = ({
               defaultItem={selectedIcon}
               callback={(icon: string) => setSelectedIcon(icon)}
               data={icons}
+              keyExtractor={keyExtractor}
             />
           )}
 
