@@ -1,16 +1,10 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
-import AvailableIcons from './AvailableIcons.json';
 import {
-  CheckIcon,
   Container,
   CurrentSelection,
   CurrentSelectionTitle,
   GoBack,
-  GoBackIcon,
-  OptionContainer,
-  OptionContent,
-  OptionIcon,
+  GoBackItem,
   Options,
   OptionsContent,
   OptionsFooter,
@@ -19,66 +13,62 @@ import {
   OptionsSelectorContainer,
   OptionsSelectorHeader,
   OptionsSelectorTitle,
-  SelectedIcon,
+  SelectedItem,
 } from './styles';
 
-export type MaterialIconName = React.ComponentProps<
-  typeof MaterialIcons
->['name'];
-
-type IconSelectorProps = {
-  defaultIcon: MaterialIconName;
-  callback(icon: string): void;
+export type ItemProps = {
+  item: string;
+  selectedItem: string;
+  handleSelection(item: string): void;
 };
 
-const IconSelector: React.FC<IconSelectorProps> = ({
-  defaultIcon,
+type SelectProps = {
+  defaultItem: string;
+  callback(item: string): void;
+  data: Array<unknown>;
+  ItemElement({
+    item,
+    selectedItem,
+    handleSelection,
+  }: ItemProps): React.ReactElement;
+};
+
+const Select: React.FC<SelectProps> = ({
+  defaultItem,
   callback,
+  ItemElement,
+  data,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [icons, setIcons] = React.useState([]);
-  const [selectedIcon, setSelectedIcon] =
-    React.useState<MaterialIconName>(defaultIcon);
+  const [selectedItem, setSelectedItem] = React.useState<string>(defaultItem);
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSelectIcon = (icon: MaterialIconName) => {
-    setSelectedIcon(icon);
-    callback(icon);
+  const handleSelection = (item: string) => {
+    setSelectedItem(item);
+    callback(item);
     toggleModal();
   };
 
-  const keyExtractor = (icon: MaterialIconName) => icon;
-
-  const renderItem = ({ item: icon }) => (
-    <OptionContainer
-      selected={selectedIcon === icon}
-      onPress={() => handleSelectIcon(icon)}
-    >
-      <OptionContent>
-        <OptionIcon name={icon} />
-        {selectedIcon === icon && <CheckIcon />}
-      </OptionContent>
-    </OptionContainer>
-  );
+  const keyExtractor = (id: string) => id;
 
   const listFooterComponent = () => <OptionsFooter />;
 
-  React.useEffect(() => {
-    let isMounted = true;
-    if (isMounted) setIcons(AvailableIcons.icons);
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const renderItem = ({ item }) => (
+    <ItemElement
+      item={item}
+      selectedItem={selectedItem}
+      handleSelection={() => handleSelection(item)}
+    />
+  );
 
   return (
     <Container>
       <CurrentSelection onPress={toggleModal}>
         <CurrentSelectionTitle>
-          <SelectedIcon name={selectedIcon} />
+          <SelectedItem name={selectedItem} />
         </CurrentSelectionTitle>
       </CurrentSelection>
       <OptionsSelectorContainer
@@ -88,7 +78,7 @@ const IconSelector: React.FC<IconSelectorProps> = ({
       >
         <OptionsSelectorHeader>
           <GoBack onPress={toggleModal}>
-            <GoBackIcon />
+            <GoBackItem />
           </GoBack>
           <OptionsSelectorTitle>Selecione um ícone</OptionsSelectorTitle>
           <OptionsSelectorCancel onPress={toggleModal}>
@@ -98,7 +88,7 @@ const IconSelector: React.FC<IconSelectorProps> = ({
         <OptionsContent>
           <Options
             initialNumToRender={4}
-            data={icons}
+            data={data}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
             ListFooterComponent={listFooterComponent}
@@ -109,4 +99,4 @@ const IconSelector: React.FC<IconSelectorProps> = ({
   );
 };
 
-export default IconSelector;
+export default Select;
