@@ -14,6 +14,7 @@ import {
   ModalContent,
   ModalSection,
   ModalTitle,
+  SelectContainer,
 } from './styles';
 
 type ModalProps = {
@@ -142,14 +143,16 @@ const CategoryModal: React.FC<ModalProps> = ({
           {isLoadingIcon ? (
             <LoadingIcon />
           ) : (
-            <Select
-              ItemElement={IconItem}
-              defaultItem={selectedIcon}
-              callback={(icon: string) => setSelectedIcon(icon)}
-              data={icons}
-              keyExtractor={keyExtractor}
-              isIcon
-            />
+            <SelectContainer>
+              <Select
+                ItemElement={IconItem}
+                defaultItem={selectedIcon}
+                callback={(icon: string) => setSelectedIcon(icon)}
+                data={icons}
+                keyExtractor={keyExtractor}
+                isIcon
+              />
+            </SelectContainer>
           )}
 
           <Input

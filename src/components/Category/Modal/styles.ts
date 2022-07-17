@@ -44,3 +44,10 @@ export const LoadingIcon = styled.View`
   border-radius: 10px;
   background: ${props => props.theme.colors.gray_600};
 `;
+
+export const SelectContainer = styled.View`
+  margin: 0 10px;
+  background: ${props => props.theme.colors.gray_100};
+  padding: 10px;
+  border-radius: 10px;
+`;
