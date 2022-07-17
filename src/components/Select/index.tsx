@@ -44,14 +44,12 @@ const Select: React.FC<SelectProps> = ({
   isIcon,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [selectedItem, setSelectedItem] = React.useState<string>(defaultItem);
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
 
   const handleSelection = (item: string) => {
-    setSelectedItem(item);
     callback(item);
     toggleModal();
   };
@@ -61,7 +59,7 @@ const Select: React.FC<SelectProps> = ({
   const renderItem = ({ item }) => (
     <ItemElement
       item={item}
-      selectedItem={selectedItem}
+      selectedItem={defaultItem}
       handleSelection={() => handleSelection(item)}
     />
   );
@@ -70,9 +68,9 @@ const Select: React.FC<SelectProps> = ({
     <Container>
       <CurrentSelection onPress={toggleModal}>
         {isIcon ? (
-          <SelectedItem name={selectedItem} />
+          <SelectedItem name={defaultItem} />
         ) : (
-          <CurrentSelectionTitle>{selectedItem}</CurrentSelectionTitle>
+          <CurrentSelectionTitle>{defaultItem}</CurrentSelectionTitle>
         )}
       </CurrentSelection>
       <OptionsSelectorContainer
