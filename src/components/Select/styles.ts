@@ -1,22 +1,17 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 
-type OptionProps = {
-  selected: boolean;
-};
-
-export const Container = styled.View`
-  margin: 0 10px;
-  background: ${props => props.theme.colors.gray_100};
-  padding: 10px;
-  border-radius: 10px;
-`;
+export const Container = styled.View``;
 
 export const CurrentSelection = styled.TouchableOpacity.attrs(props => ({
   activeOpacity: props.theme.constants.buttonActiveOpacity,
 }))``;
 
-export const CurrentSelectionTitle = styled.Text``;
+export const CurrentSelectionTitle = styled.Text`
+  color: ${props => props.theme.colors.gray_600};
+  font-size: 18px;
+  font-weight: bold;
+`;
 
 export const OptionsSelectorContainer = styled.Modal``;
 
