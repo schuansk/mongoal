@@ -1,9 +1,8 @@
 import React from 'react';
-import { Text } from 'react-native';
 import ActionButton from '../../components/ActionButton';
 import GoalIndicador from '../../components/GoalIndicator';
-import Modal from '../../components/Modal';
 import Navbar from '../../components/Navbar';
+import CreateTransaction from '../../components/Transaction/Create';
 import TranstionList from '../../components/Transaction/List';
 import {
   ActionButtonContainer,
@@ -33,9 +32,7 @@ const Home: React.FC = () => {
         <ActionButton onPress={toggleModal} />
       </ActionButtonContainer>
       <Navbar name="Home" />
-      <Modal toggleModal={toggleModal} isVisible={isOpen} height={0.25}>
-        <Text>Home</Text>
-      </Modal>
+      <CreateTransaction toggleModal={toggleModal} isVisible={isOpen} />
     </Container>
   );
 };
