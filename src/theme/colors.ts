@@ -6,4 +6,5 @@ export const colors = {
   red_600: '#FF6565',
   orange_700: '#FFB11A',
   blue_600: '#5CBBFF',
+  green_700: '#32BA40',
 };
