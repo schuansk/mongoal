@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { useFocusEffect } from '@react-navigation/native';
 import React from 'react';
 import { database } from '../../../database';
 import AccountModel from '../../../database/models/accountModel';
@@ -79,9 +80,11 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
     value,
   ]);
 
-  React.useEffect(() => {
-    getData();
-  }, [getData]);
+  useFocusEffect(
+    React.useCallback(() => {
+      getData();
+    }, [getData]),
+  );
 
   return (
     <Modal isVisible={isVisible} toggleModal={toggleModal} height={0.55}>
