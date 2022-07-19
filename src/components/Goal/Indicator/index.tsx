@@ -1,4 +1,5 @@
 import React from 'react';
+import GoalModal from '../Modal';
 import {
   Container,
   Content,
@@ -12,6 +13,7 @@ import {
 
 const GoalIndicador: React.FC = () => {
   const [width, setWidth] = React.useState(24);
+  const [isVisible, setIsVisible] = React.useState(false);
 
   const calculateGoalIndicatorWidth = React.useCallback(() => {
     const px = 30;
@@ -25,6 +27,10 @@ const GoalIndicador: React.FC = () => {
     setWidth(currentPosition * px);
   }, []);
 
+  const toggleModal = () => {
+    setIsVisible(!isVisible);
+  };
+
   React.useEffect(() => {
     calculateGoalIndicatorWidth();
   }, [calculateGoalIndicatorWidth]);
@@ -36,11 +42,12 @@ const GoalIndicador: React.FC = () => {
         <GoalPercentageContainer>
           <GoalPercentage width={width} />
         </GoalPercentageContainer>
-        <GoalValueContainer>
+        <GoalValueContainer onPress={toggleModal}>
           <GoalValue>R$ 8.000,00</GoalValue>
           <EditIcon />
         </GoalValueContainer>
       </Content>
+      <GoalModal isVisible={isVisible} toggleModal={toggleModal} />
     </Container>
   );
 };
