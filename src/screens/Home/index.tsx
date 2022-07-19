@@ -1,6 +1,6 @@
 import React from 'react';
 import ActionButton from '../../components/ActionButton';
-import GoalIndicador from '../../components/GoalIndicator';
+import GoalIndicador from '../../components/Goal/Indicator';
 import Navbar from '../../components/Navbar';
 import CreateTransaction from '../../components/Transaction/Create';
 import TranstionList from '../../components/Transaction/List';
