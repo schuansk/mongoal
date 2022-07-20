@@ -5,6 +5,7 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider } from 'styled-components';
+import AppProvider from './src/hooks';
 import Routes from './src/routes';
 import stylertTheme from './src/theme';
 
@@ -17,9 +18,11 @@ const App = () => {
         translucent
       />
       <ThemeProvider theme={stylertTheme}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <Routes />
-        </GestureHandlerRootView>
+        <AppProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <Routes />
+          </GestureHandlerRootView>
+        </AppProvider>
       </ThemeProvider>
     </NavigationContainer>
   );
