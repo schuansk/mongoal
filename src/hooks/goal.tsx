@@ -25,7 +25,6 @@ const GoalProvider: React.FC<Props> = ({ children }) => {
 
   React.useEffect(() => {
     (async () => {
-      console.log('***goal***');
       const value = await AsyncStorage.getItem('@mongoal:value');
       const goalValue = Number(value || 0);
       if (!Number.isNaN(goalValue)) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useGoal } from '../../../hooks/goal';
 import GoalModal from '../Modal';
 import {
   Container,
@@ -14,17 +15,17 @@ import {
 const GoalIndicador: React.FC = () => {
   const [width, setWidth] = React.useState(24);
   const [isVisible, setIsVisible] = React.useState(false);
+  const { goal, loading } = useGoal();
 
-  const calculateGoalIndicatorWidth = React.useCallback(() => {
+  const calculateGoalIndicatorWidth = React.useCallback((value: number) => {
     const px = 30;
     const currentBalance = 1000;
-    const goal = 8000;
-    const currentPosition = Math.floor((currentBalance / goal) * 10);
-    if (currentPosition === 0) {
-      setWidth(px);
-      return;
+    if (value > 0) {
+      const currentPosition = Math.floor(
+        (currentBalance / 100 / (value / 100)) * 10,
+      );
+      setWidth(currentPosition * px);
     }
-    setWidth(currentPosition * px);
   }, []);
 
   const toggleModal = () => {
@@ -32,8 +33,10 @@ const GoalIndicador: React.FC = () => {
   };
 
   React.useEffect(() => {
-    calculateGoalIndicatorWidth();
-  }, [calculateGoalIndicatorWidth]);
+    if (!loading) {
+      calculateGoalIndicatorWidth(goal.value);
+    }
+  }, [calculateGoalIndicatorWidth, goal, loading]);
 
   return (
     <Container>
@@ -43,7 +46,7 @@ const GoalIndicador: React.FC = () => {
           <GoalPercentage width={width} />
         </GoalPercentageContainer>
         <GoalValueContainer onPress={toggleModal}>
-          <GoalValue>R$ 8.000,00</GoalValue>
+          <GoalValue>{goal.formattedValue}</GoalValue>
           <EditIcon />
         </GoalValueContainer>
       </Content>
