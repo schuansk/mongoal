@@ -13,6 +13,7 @@ type Goal = {
 
 interface GoalContextData {
   goal: Goal;
+  loading: boolean;
   update(value: number): void;
 }
 
@@ -20,14 +21,17 @@ const GoalContext = React.createContext<GoalContextData>({} as GoalContextData);
 
 const GoalProvider: React.FC<Props> = ({ children }) => {
   const [goal, setGoal] = React.useState<Goal>({} as Goal);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    (async (): Promise<void> => {
+    (async () => {
+      console.log('***goal***');
       const value = await AsyncStorage.getItem('@mongoal:value');
-      const goalValue = Number(value);
-      if (Number.isNaN(goalValue)) {
+      const goalValue = Number(value || 0);
+      if (!Number.isNaN(goalValue)) {
         setGoal({ value: goalValue, formattedValue: formatValue(goalValue) });
       }
+      setLoading(false);
     })();
   }, []);
 
@@ -44,7 +48,10 @@ const GoalProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const value = React.useMemo(() => ({ goal, update }), [goal]);
+  const value = React.useMemo(
+    () => ({ goal, update, loading }),
+    [goal, loading],
+  );
 
   return <GoalContext.Provider value={value}>{children}</GoalContext.Provider>;
 };
