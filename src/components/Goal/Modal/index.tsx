@@ -18,15 +18,15 @@ type ModalProps = {
 
 const GoalModal: React.FC<ModalProps> = ({ toggleModal, isVisible }) => {
   const [value, setValue] = React.useState('');
-  const { goal, update } = useGoal();
+  const { goal, updateGoal } = useGoal();
 
   const handleSubmit = React.useCallback(() => {
     const valueToNumber = Number(value);
     if (!Number.isNaN(valueToNumber)) {
-      update(valueToNumber);
+      updateGoal(valueToNumber);
       toggleModal();
     }
-  }, [toggleModal, update, value]);
+  }, [toggleModal, updateGoal, value]);
 
   React.useEffect(() => {
     setValue(`${goal.value}`);

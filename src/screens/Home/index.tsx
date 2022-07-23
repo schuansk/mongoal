@@ -4,6 +4,7 @@ import GoalIndicador from '../../components/Goal/Indicator';
 import Navbar from '../../components/Navbar';
 import CreateTransaction from '../../components/Transaction/Create';
 import TranstionList from '../../components/Transaction/List';
+import { useGoal } from '../../hooks/goal';
 import {
   ActionButtonContainer,
   Container,
@@ -14,6 +15,7 @@ import {
 
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { balance } = useGoal();
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -23,7 +25,7 @@ const Home: React.FC = () => {
     <Container>
       <Content>
         <Header>
-          <CurrentBalance>R$ 1.000,00</CurrentBalance>
+          <CurrentBalance>{balance.formattedValue}</CurrentBalance>
         </Header>
         <GoalIndicador />
         <TranstionList />

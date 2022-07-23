@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
+import { database } from '../database';
+import TransactionModel from '../database/models/transactionModel';
 import { formatValue } from '../utils';
 
 type Props = {
@@ -11,34 +13,27 @@ type Goal = {
   formattedValue: string;
 };
 
+type Balance = {
+  value: number;
+  formattedValue: string;
+};
+
 interface GoalContextData {
   goal: Goal;
+  balance: Balance;
   loading: boolean;
-  update(value: number): void;
+  updateGoal(value: number): void;
+  updateBalance(transaction: TransactionModel): void;
 }
 
 const GoalContext = React.createContext<GoalContextData>({} as GoalContextData);
 
 const GoalProvider: React.FC<Props> = ({ children }) => {
   const [goal, setGoal] = React.useState<Goal>({} as Goal);
+  const [balance, setBalance] = React.useState<Balance>({} as Balance);
   const [loading, setLoading] = React.useState(true);
 
-  React.useEffect(() => {
-    (async () => {
-      const value = await AsyncStorage.getItem('@mongoal:value');
-      const goalValue = Number(value || 0);
-      if (!Number.isNaN(goalValue)) {
-        const centsToValue = goalValue / 100;
-        setGoal({
-          value: centsToValue,
-          formattedValue: formatValue(centsToValue),
-        });
-      }
-      setLoading(false);
-    })();
-  }, []);
-
-  const update = async (value: number) => {
+  const updateGoal = async (value: number) => {
     try {
       const goalValue = String(value * 100);
       await AsyncStorage.setItem('@mongoal:value', goalValue);
@@ -51,10 +46,63 @@ const GoalProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const value = React.useMemo(
-    () => ({ goal, update, loading }),
-    [goal, loading],
+  const updateBalance = React.useCallback(
+    (transaction: TransactionModel) => {
+      let currentBalance = balance.value * 100;
+      if (transaction.deposit) {
+        currentBalance += transaction.value;
+      } else {
+        currentBalance -= transaction.value;
+      }
+      const centsToValue = currentBalance / 100;
+      setBalance({
+        value: centsToValue,
+        formattedValue: formatValue(centsToValue),
+      });
+    },
+    [balance],
   );
+
+  const getCurrentBalance = React.useCallback(async () => {
+    let currentBalance = 0;
+    const transactions = await database.collections
+      .get<TransactionModel>('transactions')
+      .query()
+      .fetch();
+    transactions.forEach(transaction => {
+      if (transaction.deposit) {
+        currentBalance += transaction.value;
+      } else {
+        currentBalance -= transaction.value;
+      }
+    });
+    const centsToValue = currentBalance / 100;
+    setBalance({
+      value: centsToValue,
+      formattedValue: formatValue(centsToValue),
+    });
+  }, []);
+
+  const value = React.useMemo(
+    () => ({ goal, updateGoal, loading, balance, updateBalance }),
+    [balance, goal, loading, updateBalance],
+  );
+
+  React.useEffect(() => {
+    (async () => {
+      const storedValue = await AsyncStorage.getItem('@mongoal:value');
+      const goalValue = Number(storedValue || 0);
+      if (!Number.isNaN(goalValue)) {
+        const centsToValue = goalValue / 100;
+        setGoal({
+          value: centsToValue,
+          formattedValue: formatValue(centsToValue),
+        });
+      }
+      getCurrentBalance();
+      setLoading(false);
+    })();
+  }, [getCurrentBalance]);
 
   return <GoalContext.Provider value={value}>{children}</GoalContext.Provider>;
 };

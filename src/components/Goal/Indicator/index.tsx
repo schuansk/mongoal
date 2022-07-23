@@ -15,25 +15,25 @@ import {
 const GoalIndicador: React.FC = () => {
   const [width, setWidth] = React.useState(24);
   const [isVisible, setIsVisible] = React.useState(false);
-  const { goal } = useGoal();
+  const { goal, balance } = useGoal();
 
-  const calculateGoalIndicatorWidth = React.useCallback((value: number) => {
+  const calculateGoalIndicatorWidth = React.useCallback(() => {
     const px = 30;
-    const currentBalance = 1000;
-    if (value > 0) {
+    const currentBalance = balance.value;
+    if (goal.value > 0 && currentBalance !== undefined) {
       const currentPosition = Math.floor(
-        (currentBalance / 100 / (value / 100)) * 10,
+        (currentBalance / 100 / (goal.value / 100)) * 10,
       );
       setWidth(currentPosition * px);
     }
-  }, []);
+  }, [goal, balance]);
 
   const toggleModal = () => {
     setIsVisible(!isVisible);
   };
 
   React.useEffect(() => {
-    calculateGoalIndicatorWidth(goal.value);
+    calculateGoalIndicatorWidth();
   }, [calculateGoalIndicatorWidth, goal]);
 
   return (

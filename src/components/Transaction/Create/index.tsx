@@ -5,6 +5,7 @@ import { database } from '../../../database';
 import AccountModel from '../../../database/models/accountModel';
 import CategoryModel from '../../../database/models/categoryModel';
 import TransactionModel from '../../../database/models/transactionModel';
+import { useGoal } from '../../../hooks/goal';
 import Input from '../../Input';
 import Modal, { ModalProps } from '../../Modal';
 import Select from '../../Select';
@@ -37,6 +38,7 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
   const [transactionType, setTransactionType] = React.useState<
     'deposit' | 'withdrawal'
   >('deposit');
+  const { updateBalance } = useGoal();
 
   const keyExtractor = ({ id }) => id;
 
@@ -59,7 +61,7 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
       return;
     const valueToCents = Number(value) * 100;
     await database.write(async () => {
-      await database
+      const response = await database
         .get<TransactionModel>('transactions')
         .create(transaction => {
           transaction.value = valueToCents;
@@ -67,6 +69,7 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
           transaction.category.id = selectedCategory.id;
           transaction.deposit = transactionType === 'deposit';
         });
+      updateBalance(response);
     });
     setSelectedAccount({} as AccountModel);
     setSelectedCategory({} as CategoryModel);
@@ -77,6 +80,7 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
     selectedCategory.id,
     toggleModal,
     transactionType,
+    updateBalance,
     value,
   ]);
 
