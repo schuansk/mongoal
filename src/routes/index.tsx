@@ -1,13 +1,23 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { useGoal } from '../hooks/goal';
 import AccountBalance from '../screens/AccountBalance';
 import Category from '../screens/Category';
 import Home from '../screens/Home';
 import Settings from '../screens/Settings';
+import { Container, Loader } from './styles';
 
 const Stack = createNativeStackNavigator();
-
 const Routes: React.FC = () => {
+  const { loading } = useGoal();
+
+  if (loading) {
+    return (
+      <Container>
+        <Loader />
+      </Container>
+    );
+  }
   return (
     <Stack.Navigator
       initialRouteName="Home"
