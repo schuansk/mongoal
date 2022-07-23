@@ -1,5 +1,6 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
 import React from 'react';
+import { useGoal } from '../../../hooks/goal';
 import Input from '../../Input';
 import Modal from '../../Modal';
 import {
@@ -16,7 +17,20 @@ type ModalProps = {
 };
 
 const GoalModal: React.FC<ModalProps> = ({ toggleModal, isVisible }) => {
-  const [goal, setGoal] = React.useState('');
+  const [value, setValue] = React.useState('');
+  const { goal, update } = useGoal();
+
+  const handleSubmit = React.useCallback(() => {
+    const valueToNumber = Number(value);
+    if (!Number.isNaN(valueToNumber)) {
+      update(valueToNumber);
+      toggleModal();
+    }
+  }, [toggleModal, update, value]);
+
+  React.useEffect(() => {
+    setValue(`${goal.value}`);
+  }, [goal]);
 
   return (
     <Modal toggleModal={toggleModal} isVisible={isVisible} height={0.32}>
@@ -24,13 +38,14 @@ const GoalModal: React.FC<ModalProps> = ({ toggleModal, isVisible }) => {
       <ModalContent>
         <ModalSection>
           <Input
-            defaultValue={goal}
+            keyboardType="decimal-pad"
+            defaultValue={value}
             placeholder="0,00"
-            callback={value => setGoal(value)}
+            callback={content => setValue(content)}
           />
         </ModalSection>
         <ModalSection>
-          <ConfirmButton onPress={() => ({})}>
+          <ConfirmButton onPress={handleSubmit}>
             <ConfirmIcon />
           </ConfirmButton>
         </ModalSection>

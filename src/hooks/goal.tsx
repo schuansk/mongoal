@@ -28,7 +28,11 @@ const GoalProvider: React.FC<Props> = ({ children }) => {
       const value = await AsyncStorage.getItem('@mongoal:value');
       const goalValue = Number(value || 0);
       if (!Number.isNaN(goalValue)) {
-        setGoal({ value: goalValue, formattedValue: formatValue(goalValue) });
+        const centsToValue = goalValue / 100;
+        setGoal({
+          value: centsToValue,
+          formattedValue: formatValue(centsToValue),
+        });
       }
       setLoading(false);
     })();
@@ -36,7 +40,7 @@ const GoalProvider: React.FC<Props> = ({ children }) => {
 
   const update = async (value: number) => {
     try {
-      const goalValue = String(value);
+      const goalValue = String(value * 100);
       await AsyncStorage.setItem('@mongoal:value', goalValue);
       setGoal({
         value,

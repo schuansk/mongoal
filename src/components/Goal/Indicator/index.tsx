@@ -15,7 +15,7 @@ import {
 const GoalIndicador: React.FC = () => {
   const [width, setWidth] = React.useState(24);
   const [isVisible, setIsVisible] = React.useState(false);
-  const { goal, loading } = useGoal();
+  const { goal } = useGoal();
 
   const calculateGoalIndicatorWidth = React.useCallback((value: number) => {
     const px = 30;
@@ -33,10 +33,8 @@ const GoalIndicador: React.FC = () => {
   };
 
   React.useEffect(() => {
-    if (!loading) {
-      calculateGoalIndicatorWidth(goal.value);
-    }
-  }, [calculateGoalIndicatorWidth, goal, loading]);
+    calculateGoalIndicatorWidth(goal.value);
+  }, [calculateGoalIndicatorWidth, goal]);
 
   return (
     <Container>
