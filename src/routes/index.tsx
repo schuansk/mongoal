@@ -4,7 +4,6 @@ import { useGoal } from '../hooks/goal';
 import AccountBalance from '../screens/AccountBalance';
 import Category from '../screens/Category';
 import Home from '../screens/Home';
-import Settings from '../screens/Settings';
 import { Container, Loader } from './styles';
 
 const Stack = createNativeStackNavigator();
@@ -29,7 +28,6 @@ const Routes: React.FC = () => {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Category" component={Category} />
       <Stack.Screen name="AccountBalance" component={AccountBalance} />
-      <Stack.Screen name="Settings" component={Settings} />
     </Stack.Navigator>
   );
 };

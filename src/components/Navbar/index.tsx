@@ -8,7 +8,6 @@ import {
   Container,
   HomeIcon,
   Option,
-  SettingsIcon,
 } from './styles';
 
 type Screens = NativeStackNavigationProp<RootStackParamList>;
@@ -34,9 +33,6 @@ const Navbar: React.FC<NavbarProps> = ({ name }) => {
       </Option>
       <Option onPress={() => navigator('AccountBalance')}>
         <BalanceIcon selected={name === 'AccountBalance'} />
-      </Option>
-      <Option onPress={() => navigator('Settings')}>
-        <SettingsIcon selected={name === 'Settings'} />
       </Option>
     </Container>
   );

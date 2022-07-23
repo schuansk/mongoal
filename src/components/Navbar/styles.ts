@@ -60,16 +60,3 @@ export const BalanceIcon = styled(
       ? props.theme.colors.purple_700
       : props.theme.colors.gray_600};
 `;
-
-export const SettingsIcon = styled(
-  Ionicons as unknown as AnyStyledComponent,
-).attrs(props => ({
-  name: 'settings-outline',
-  size: props.theme.constants.iconSize,
-  color: props.theme.colors.gray_600,
-}))<IconProps>`
-  color: ${props =>
-    props.selected
-      ? props.theme.colors.purple_700
-      : props.theme.colors.gray_600};
-`;
