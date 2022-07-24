@@ -3,8 +3,18 @@
     "name": "mongoal",
     "slug": "mongoal",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "icon": "./assets/images/icon.png",
+    "android": {
+      "package": "com.schuansk.mongoal",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#fff"
+      }
+    },
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "backgroundColor": "#ffffff"
+    }
   }
 }
