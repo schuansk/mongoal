@@ -25,7 +25,9 @@ const GoalIndicador: React.FC = () => {
         (currentBalance / 100 / (goal.value / 100)) * 10,
       );
       setWidth(currentPosition * px);
+      return;
     }
+    setWidth(0);
   }, [goal, balance]);
 
   const toggleModal = () => {
