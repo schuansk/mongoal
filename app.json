@@ -6,7 +6,6 @@
     "assetBundlePatterns": ["**/*"],
     "icon": "./assets/images/icon.png",
     "android": {
-      "package": "com.schuansk.mongoal",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#fff"
