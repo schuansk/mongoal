@@ -1,34 +1,30 @@
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React from 'react';
-import {
-  Body,
-  CloseIcon,
-  CloseModalButton,
-  Container,
-  Content,
-  Header,
-} from './styles';
+import { Dimensions } from 'react-native';
+import { Body, Container, Content } from './styles';
 
 export interface ModalProps {
   children: React.ReactNode;
-  isVisible: boolean;
-  toggleModal(): void;
-  height: number;
+  modalRef: React.MutableRefObject<BottomSheetMethods>;
+  defaultHeight: number;
 }
 
-const Modal: React.FC<ModalProps> = ({
-  children,
-  isVisible,
-  height,
-  toggleModal,
-}) => {
+const { height } = Dimensions.get('window');
+
+const Modal: React.FC<ModalProps> = ({ children, modalRef, defaultHeight }) => {
+  const snapPoints = React.useMemo(
+    () => [1, height - defaultHeight || 1],
+    [defaultHeight],
+  );
+
   return (
-    <Container onBackdropPress={toggleModal} isVisible={isVisible}>
-      <Content height={height}>
-        <Header>
-          <CloseModalButton onPress={toggleModal}>
-            <CloseIcon />
-          </CloseModalButton>
-        </Header>
+    <Container
+      ref={modalRef}
+      index={0}
+      snapPoints={snapPoints}
+      enableHandlePanningGesture
+    >
+      <Content>
         <Body>{children}</Body>
       </Content>
     </Container>
