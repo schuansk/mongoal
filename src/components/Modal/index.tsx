@@ -7,11 +7,17 @@ export interface ModalProps {
   children: React.ReactNode;
   modalRef: React.MutableRefObject<BottomSheetMethods>;
   defaultHeight: number;
+  handleChange(index: number): void;
 }
 
 const { height } = Dimensions.get('window');
 
-const Modal: React.FC<ModalProps> = ({ children, modalRef, defaultHeight }) => {
+const Modal: React.FC<ModalProps> = ({
+  children,
+  modalRef,
+  defaultHeight,
+  handleChange,
+}) => {
   const snapPoints = React.useMemo(
     () => [1, height - defaultHeight || 1],
     [defaultHeight],
@@ -23,6 +29,7 @@ const Modal: React.FC<ModalProps> = ({ children, modalRef, defaultHeight }) => {
       index={0}
       snapPoints={snapPoints}
       enableHandlePanningGesture
+      onChange={handleChange}
     >
       <Content>
         <Body>{children}</Body>
