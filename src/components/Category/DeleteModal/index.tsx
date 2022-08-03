@@ -1,4 +1,5 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React from 'react';
 import { database } from '../../../database';
 import CategoryModel from '../../../database/models/categoryModel';
@@ -12,15 +13,15 @@ import {
 } from './styles';
 
 type ModalProps = {
-  toggleModal(): void;
-  isVisible: boolean;
   categoryId?: string;
+  modalRef: React.MutableRefObject<BottomSheetMethods>;
+  handleChange(index: number): void;
 };
 
 const DeleteCategoryModal: React.FC<ModalProps> = ({
-  toggleModal,
-  isVisible,
+  modalRef,
   categoryId,
+  handleChange,
 }) => {
   const [category, setCategory] = React.useState<CategoryModel>(
     {} as CategoryModel,
@@ -42,11 +43,11 @@ const DeleteCategoryModal: React.FC<ModalProps> = ({
       await database.write(async () => {
         await category.destroyPermanently();
       });
-      toggleModal();
+      modalRef.current?.close();
     } catch (error) {
       console.log(error);
     }
-  }, [category, toggleModal]);
+  }, [category, modalRef]);
 
   React.useEffect(() => {
     setIsMounted(true);
@@ -61,15 +62,12 @@ const DeleteCategoryModal: React.FC<ModalProps> = ({
   }, [categoryId, getCategory, isMounted]);
 
   return (
-    <Modal toggleModal={toggleModal} isVisible={isVisible} height={0.22}>
+    <Modal defaultHeight={600} modalRef={modalRef} handleChange={handleChange}>
       <ModalTitle>Apagar {category.name}?</ModalTitle>
       <ModalContent>
         <ModalSection>
           <DeleteCategoryButton delete onPress={deleteCategory}>
             <ButtonTitle delete>Sim</ButtonTitle>
-          </DeleteCategoryButton>
-          <DeleteCategoryButton onPress={toggleModal}>
-            <ButtonTitle>Cancelar</ButtonTitle>
           </DeleteCategoryButton>
         </ModalSection>
       </ModalContent>

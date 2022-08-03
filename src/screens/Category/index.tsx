@@ -13,6 +13,7 @@ const Category: React.FC = () => {
   const [categoryId, setCategoryId] = React.useState('');
 
   const modalRef = React.useRef<BottomSheet>(null);
+  const modalDeleteRef = React.useRef<BottomSheet>(null);
 
   const toggleModal = () => {
     modalRef.current?.expand();
@@ -21,6 +22,11 @@ const Category: React.FC = () => {
   const editCategory = React.useCallback((id: string) => {
     setCategoryId(id);
     toggleModal();
+  }, []);
+
+  const deleteCategory = React.useCallback((id: string) => {
+    setCategoryId(id);
+    modalDeleteRef.current?.expand();
   }, []);
 
   const handleChange = (index: number) => {
@@ -50,9 +56,9 @@ const Category: React.FC = () => {
         handleChange={handleChange}
       />
       <DeleteCategoryModal
-        toggleModal={toggleDeleteModal}
-        isVisible={deleteCategoryIsVisible}
+        modalRef={modalDeleteRef}
         categoryId={categoryId}
+        handleChange={handleChange}
       />
     </Container>
   );
