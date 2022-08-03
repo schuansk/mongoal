@@ -1,6 +1,6 @@
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Keyboard } from 'react-native';
 import { Body, Container, Content } from './styles';
 
 export interface ModalProps {
@@ -30,6 +30,7 @@ const Modal: React.FC<ModalProps> = ({
       snapPoints={snapPoints}
       enableHandlePanningGesture
       onChange={handleChange}
+      onClose={() => Keyboard.dismiss}
     >
       <Content>
         <Body>{children}</Body>
