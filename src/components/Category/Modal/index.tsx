@@ -1,4 +1,5 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React from 'react';
 import { database } from '../../../database';
 import CategoryModel from '../../../database/models/categoryModel';
@@ -18,15 +19,15 @@ import {
 } from './styles';
 
 type ModalProps = {
-  toggleModal(): void;
-  isVisible: boolean;
   categoryId?: string;
+  modalRef: React.MutableRefObject<BottomSheetMethods>;
+  handleChange(index: number): void;
 };
 
 const CategoryModal: React.FC<ModalProps> = ({
-  toggleModal,
-  isVisible,
   categoryId,
+  modalRef,
+  handleChange,
 }) => {
   const [selectedIcon, setSelectedIcon] = React.useState('category');
   const [categoryName, setCategoryName] = React.useState('');
@@ -46,14 +47,11 @@ const CategoryModal: React.FC<ModalProps> = ({
     [isMounted],
   );
 
-  const reset = React.useCallback(
-    (changeModal = true) => {
-      if (changeModal) toggleModal();
-      setCategoryName('');
-      setSelectedIcon('category');
-    },
-    [toggleModal],
-  );
+  const reset = React.useCallback(() => {
+    setCategoryName('');
+    setSelectedIcon('category');
+    modalRef.current?.close();
+  }, [modalRef]);
 
   const handleAddNewCategory = React.useCallback(
     async (name: string, icon: string) => {
@@ -66,7 +64,7 @@ const CategoryModal: React.FC<ModalProps> = ({
               category.icon = icon;
             });
         });
-        reset(true);
+        reset();
       } catch (error) {
         console.log('error', error);
       }
@@ -118,25 +116,26 @@ const CategoryModal: React.FC<ModalProps> = ({
       if (categoryId) {
         getCategory(categoryId);
         setIsLoadingIcon(true);
+      } else {
+        reset();
       }
     }
     return () => {
       setIsMounted(false);
     };
-  }, [categoryId, getCategory, isMounted]);
+  }, [categoryId, getCategory, isMounted, reset]);
 
   React.useEffect(() => {
     if (isMounted) {
-      if (!isVisible) reset(false);
-      else setIcons(AvailableIcons.icons);
+      setIcons(AvailableIcons.icons);
     }
     return () => {
       setIsMounted(false);
     };
-  }, [isMounted, isVisible, reset]);
+  }, [isMounted, reset]);
 
   return (
-    <Modal toggleModal={toggleModal} isVisible={isVisible} height={0.32}>
+    <Modal modalRef={modalRef} defaultHeight={540} handleChange={handleChange}>
       <ModalTitle>{categoryId ? 'Editar' : 'Criar nova'} categoria</ModalTitle>
       <ModalContent>
         <ModalSection>

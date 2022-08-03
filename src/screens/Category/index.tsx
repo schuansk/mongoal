@@ -1,4 +1,6 @@
+import BottomSheet from '@gorhom/bottom-sheet';
 import React from 'react';
+import { Keyboard } from 'react-native';
 import DeleteCategoryModal from '../../components/Category/DeleteModal';
 import CategoryList from '../../components/Category/List';
 import CategoryModal from '../../components/Category/Modal';
@@ -8,36 +10,25 @@ import theme from '../../theme';
 import { Container, Content } from './styles';
 
 const Category: React.FC = () => {
-  const [isVisible, setIsVisible] = React.useState(false);
-  const [deleteCategoryIsVisible, setDeleteCategoryIsVisible] =
-    React.useState(false);
   const [categoryId, setCategoryId] = React.useState('');
 
-  const toggleModal = React.useCallback(() => {
-    setIsVisible(!isVisible);
-    if (isVisible) setCategoryId('');
-  }, [isVisible]);
+  const modalRef = React.useRef<BottomSheet>(null);
 
-  const editCategory = React.useCallback(
-    (id: string) => {
-      setCategoryId(id);
-      toggleModal();
-    },
-    [toggleModal],
-  );
+  const toggleModal = () => {
+    modalRef.current?.expand();
+  };
 
-  const toggleDeleteModal = React.useCallback(() => {
-    setDeleteCategoryIsVisible(!deleteCategoryIsVisible);
-    if (deleteCategoryIsVisible) setCategoryId('');
-  }, [deleteCategoryIsVisible]);
+  const editCategory = React.useCallback((id: string) => {
+    setCategoryId(id);
+    toggleModal();
+  }, []);
 
-  const deleteCategory = React.useCallback(
-    (id: string) => {
-      setCategoryId(id);
-      toggleDeleteModal();
-    },
-    [toggleDeleteModal],
-  );
+  const handleChange = (index: number) => {
+    if (index <= 0) {
+      setCategoryId('');
+      Keyboard.dismiss();
+    }
+  };
 
   return (
     <Container>
@@ -54,9 +45,9 @@ const Category: React.FC = () => {
       </Content>
       <Navbar name="Category" />
       <CategoryModal
-        toggleModal={toggleModal}
-        isVisible={isVisible}
+        modalRef={modalRef}
         categoryId={categoryId}
+        handleChange={handleChange}
       />
       <DeleteCategoryModal
         toggleModal={toggleDeleteModal}
