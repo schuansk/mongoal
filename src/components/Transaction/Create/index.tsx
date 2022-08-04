@@ -20,11 +20,15 @@ import {
   TransactionTypeIcon,
 } from './styles';
 
-type CreateTransactionProps = Pick<ModalProps, 'isVisible' | 'toggleModal'>;
+interface CreateTransactionProps
+  extends Pick<ModalProps, 'handleChange' | 'modalRef'> {
+  closed: boolean;
+}
 
 const CreateTransaction: React.FC<CreateTransactionProps> = ({
-  isVisible,
-  toggleModal,
+  closed,
+  handleChange,
+  modalRef,
 }) => {
   const [accounts, setAccounts] = React.useState<AccountModel[]>([]);
   const [categories, setCategories] = React.useState<CategoryModel[]>([]);
@@ -41,6 +45,14 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
   const { updateBalance } = useGoal();
 
   const keyExtractor = ({ id }) => id;
+
+  const reset = React.useCallback(() => {
+    modalRef.current?.close();
+    setValue('');
+    setSelectedAccount({} as AccountModel);
+    setSelectedCategory({} as CategoryModel);
+    setTransactionType('deposit');
+  }, [modalRef]);
 
   const getData = React.useCallback(async () => {
     const accountCollection = await database
@@ -71,18 +83,21 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
         });
       updateBalance(response);
     });
-    setSelectedAccount({} as AccountModel);
-    setSelectedCategory({} as CategoryModel);
-    setTransactionType('deposit');
-    toggleModal();
+    reset();
   }, [
+    reset,
     selectedAccount.id,
     selectedCategory.id,
-    toggleModal,
     transactionType,
     updateBalance,
     value,
   ]);
+
+  React.useEffect(() => {
+    if (closed) {
+      reset();
+    }
+  }, [closed, reset]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -91,10 +106,11 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
   );
 
   return (
-    <Modal isVisible={isVisible} toggleModal={toggleModal} height={0.55}>
+    <Modal modalRef={modalRef} defaultHeight={360} handleChange={handleChange}>
       <Content>
         <ModalSection>
           <Input
+            defaultValue={value}
             placeholder="0,00"
             callback={e => setValue(e)}
             keyboardType="decimal-pad"

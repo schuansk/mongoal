@@ -1,4 +1,6 @@
+import BottomSheet from '@gorhom/bottom-sheet';
 import React from 'react';
+import { Keyboard } from 'react-native';
 import ActionButton from '../../components/ActionButton';
 import GoalIndicador from '../../components/Goal/Indicator';
 import Navbar from '../../components/Navbar';
@@ -14,11 +16,20 @@ import {
 } from './styles';
 
 const Home: React.FC = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
   const { balance } = useGoal();
+  const modalRef = React.useRef<BottomSheet>(null);
+  const [closed, setClosed] = React.useState(false);
 
   const toggleModal = () => {
-    setIsOpen(!isOpen);
+    modalRef.current?.expand();
+    setClosed(false);
+  };
+
+  const handleChange = (index: number) => {
+    if (index <= 0) {
+      Keyboard.dismiss();
+      setClosed(true);
+    }
   };
 
   return (
@@ -34,7 +45,11 @@ const Home: React.FC = () => {
         <ActionButton onPress={toggleModal} />
       </ActionButtonContainer>
       <Navbar name="Home" />
-      <CreateTransaction toggleModal={toggleModal} isVisible={isOpen} />
+      <CreateTransaction
+        closed={closed}
+        modalRef={modalRef}
+        handleChange={handleChange}
+      />
     </Container>
   );
 };
