@@ -13,7 +13,6 @@ export const Container = styled(
   width: 50px;
   height: 50px;
   border-radius: 25px;
-  z-index: 100;
   justify-content: center;
   align-items: center;
   background: ${props =>

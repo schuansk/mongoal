@@ -32,6 +32,6 @@ export const CurrentBalance = styled.Text`
 
 export const ActionButtonContainer = styled.View`
   position: absolute;
-  bottom: 60px;
+  bottom: 70px;
   right: 10px;
 `;
