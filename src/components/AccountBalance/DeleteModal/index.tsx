@@ -1,4 +1,5 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React from 'react';
 import { database } from '../../../database';
 import AccountModel from '../../../database/models/accountModel';
@@ -12,15 +13,15 @@ import {
 } from './styles';
 
 type ModalProps = {
-  toggleModal(): void;
-  isVisible: boolean;
   accountId?: string;
+  modalRef: React.MutableRefObject<BottomSheetMethods>;
+  handleChange(index: number): void;
 };
 
 const DeleteAccountModal: React.FC<ModalProps> = ({
-  toggleModal,
-  isVisible,
   accountId,
+  modalRef,
+  handleChange,
 }) => {
   const [account, setAccount] = React.useState<AccountModel>(
     {} as AccountModel,
@@ -42,11 +43,11 @@ const DeleteAccountModal: React.FC<ModalProps> = ({
       await database.write(async () => {
         await account.destroyPermanently();
       });
-      toggleModal();
+      modalRef.current?.close();
     } catch (error) {
       console.log(error);
     }
-  }, [account, toggleModal]);
+  }, [account, modalRef]);
 
   React.useEffect(() => {
     setIsMounted(true);
@@ -61,15 +62,12 @@ const DeleteAccountModal: React.FC<ModalProps> = ({
   }, [accountId, getAccount, isMounted]);
 
   return (
-    <Modal toggleModal={toggleModal} isVisible={isVisible} height={0.22}>
+    <Modal defaultHeight={600} modalRef={modalRef} handleChange={handleChange}>
       <ModalTitle>Apagar {account.name}?</ModalTitle>
       <ModalContent>
         <ModalSection>
           <DeleteAccountButton delete onPress={deleteAccount}>
             <ButtonTitle delete>Sim</ButtonTitle>
-          </DeleteAccountButton>
-          <DeleteAccountButton onPress={toggleModal}>
-            <ButtonTitle>Cancelar</ButtonTitle>
           </DeleteAccountButton>
         </ModalSection>
       </ModalContent>
