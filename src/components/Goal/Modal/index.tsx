@@ -2,7 +2,7 @@
 import React from 'react';
 import { useGoal } from '../../../hooks/goal';
 import Input from '../../Input';
-import Modal from '../../Modal';
+import Modal, { ModalProps } from '../../Modal';
 import {
   ConfirmButton,
   ConfirmIcon,
@@ -11,12 +11,15 @@ import {
   ModalTitle,
 } from './styles';
 
-type ModalProps = {
-  toggleModal(): void;
-  isVisible: boolean;
-};
+interface GoalModalProps extends Pick<ModalProps, 'handleChange' | 'modalRef'> {
+  closed: boolean;
+}
 
-const GoalModal: React.FC<ModalProps> = ({ toggleModal, isVisible }) => {
+const GoalModal: React.FC<GoalModalProps> = ({
+  handleChange,
+  modalRef,
+  closed,
+}) => {
   const [value, setValue] = React.useState('');
   const { goal, updateGoal } = useGoal();
 
@@ -24,16 +27,22 @@ const GoalModal: React.FC<ModalProps> = ({ toggleModal, isVisible }) => {
     const valueToNumber = Number(value);
     if (!Number.isNaN(valueToNumber)) {
       updateGoal(valueToNumber);
-      toggleModal();
+      modalRef.current?.close();
     }
-  }, [toggleModal, updateGoal, value]);
+  }, [modalRef, updateGoal, value]);
 
   React.useEffect(() => {
     setValue(`${goal.value}`);
   }, [goal]);
 
+  React.useEffect(() => {
+    if (closed) {
+      setValue(`${goal.value}`);
+    }
+  }, [closed, goal]);
+
   return (
-    <Modal toggleModal={toggleModal} isVisible={isVisible} height={0.32}>
+    <Modal modalRef={modalRef} defaultHeight={540} handleChange={handleChange}>
       <ModalTitle>Minha meta</ModalTitle>
       <ModalContent>
         <ModalSection>
