@@ -1,6 +1,7 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
+import BottomSheet from '@gorhom/bottom-sheet';
 import React from 'react';
-import DeleteAccountModal from '../../components/AccountBalance/DeleteModal';
+import { Keyboard } from 'react-native';
 import AccountBalanceListRender from '../../components/AccountBalance/List';
 import AccountBalanceModal from '../../components/AccountBalance/Modal';
 import Header from '../../components/Header';
@@ -11,12 +12,11 @@ import { Container, Content } from './styles';
 const AccountBalance: React.FC = () => {
   const [isVisible, setIsVisible] = React.useState(false);
   const [accountId, setAccountId] = React.useState('');
-  const [deleteAccountIsVisible, setDeleteAccountIsVisible] =
-    React.useState(false);
+  const modalRef = React.useRef<BottomSheet>(null);
 
   const toggleModal = React.useCallback(() => {
-    setIsVisible(!isVisible);
-  }, [isVisible]);
+    modalRef.current?.expand();
+  }, [modalRef]);
 
   const editAccount = React.useCallback(
     (id: string) => {
@@ -31,13 +31,12 @@ const AccountBalance: React.FC = () => {
     if (deleteAccountIsVisible) setAccountId('');
   }, [deleteAccountIsVisible]);
 
-  const deleteCategory = React.useCallback(
-    (id: string) => {
-      setAccountId(id);
-      toggleDeleteModal();
-    },
-    [toggleDeleteModal],
-  );
+  const handleChange = (index: number) => {
+    if (index <= 0) {
+      setAccountId('');
+      Keyboard.dismiss();
+    }
+  };
 
   return (
     <Container>
@@ -54,9 +53,9 @@ const AccountBalance: React.FC = () => {
       </Content>
       <Navbar name="AccountBalance" />
       <AccountBalanceModal
-        toggleModal={toggleModal}
-        isVisible={isVisible}
+        modalRef={modalRef}
         accountId={accountId}
+        handleChange={handleChange}
       />
       <DeleteAccountModal
         toggleModal={toggleDeleteModal}
