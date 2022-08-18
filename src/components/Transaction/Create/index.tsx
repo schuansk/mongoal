@@ -48,7 +48,7 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
 
   const reset = React.useCallback(() => {
     modalRef.current?.close();
-    setValue('');
+    setValue('0');
     setSelectedAccount({} as AccountModel);
     setSelectedCategory({} as CategoryModel);
     setTransactionType('deposit');
@@ -71,7 +71,7 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
   const handleSubmit = React.useCallback(async () => {
     if (selectedAccount.id === '' || selectedCategory.id === '' || value === '')
       return;
-    const valueToCents = Number(value) * 100;
+    const valueToCents = Number(value);
     await database.write(async () => {
       const response = await database
         .get<TransactionModel>('transactions')
@@ -113,7 +113,7 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
             defaultValue={value}
             placeholder="0,00"
             callback={e => setValue(e)}
-            keyboardType="decimal-pad"
+            keyboardType="numeric"
           />
         </ModalSection>
         <ModalSection>

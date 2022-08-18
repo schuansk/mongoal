@@ -34,7 +34,7 @@ const GoalIndicador: React.FC<GoalIndicatorProps> = ({ toggleModal }) => {
 
   React.useEffect(() => {
     calculateGoalIndicatorWidth();
-  }, [calculateGoalIndicatorWidth, goal]);
+  }, [calculateGoalIndicatorWidth]);
 
   return (
     <Container>

@@ -35,11 +35,12 @@ const GoalProvider: React.FC<Props> = ({ children }) => {
 
   const updateGoal = async (value: number) => {
     try {
-      const goalValue = String(value * 100);
+      const centsToValue = value / 100;
+      const goalValue = String(centsToValue);
       await AsyncStorage.setItem('@mongoal:value', goalValue);
       setGoal({
         value,
-        formattedValue: formatValue(value),
+        formattedValue: formatValue(centsToValue),
       });
     } catch (error) {
       console.log(error);
@@ -48,7 +49,7 @@ const GoalProvider: React.FC<Props> = ({ children }) => {
 
   const updateBalance = React.useCallback(
     (transaction: TransactionModel) => {
-      let currentBalance = balance.value * 100;
+      let currentBalance = balance.value;
       if (transaction.deposit) {
         currentBalance += transaction.value;
       } else {
@@ -56,7 +57,7 @@ const GoalProvider: React.FC<Props> = ({ children }) => {
       }
       const centsToValue = currentBalance / 100;
       setBalance({
-        value: centsToValue,
+        value: currentBalance,
         formattedValue: formatValue(centsToValue),
       });
     },
@@ -78,7 +79,7 @@ const GoalProvider: React.FC<Props> = ({ children }) => {
     });
     const centsToValue = currentBalance / 100;
     setBalance({
-      value: centsToValue,
+      value: currentBalance,
       formattedValue: formatValue(centsToValue),
     });
   }, []);
@@ -93,9 +94,9 @@ const GoalProvider: React.FC<Props> = ({ children }) => {
       const storedValue = await AsyncStorage.getItem('@mongoal:value');
       const goalValue = Number(storedValue || 0);
       if (!Number.isNaN(goalValue)) {
-        const centsToValue = goalValue / 100;
+        const centsToValue = goalValue;
         setGoal({
-          value: centsToValue,
+          value: centsToValue * 100,
           formattedValue: formatValue(centsToValue),
         });
       }

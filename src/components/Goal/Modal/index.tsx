@@ -47,7 +47,7 @@ const GoalModal: React.FC<GoalModalProps> = ({
       <ModalContent>
         <ModalSection>
           <Input
-            keyboardType="decimal-pad"
+            keyboardType="numeric"
             defaultValue={value}
             placeholder="0,00"
             callback={content => setValue(content)}
